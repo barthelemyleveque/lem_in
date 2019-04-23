@@ -6,7 +6,7 @@
 #    By: bleveque <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/11 10:15:06 by bleveque          #+#    #+#              #
-#    Updated: 2019/04/23 15:11:35 by bleveque         ###   ########.fr        #
+#    Updated: 2019/04/23 18:16:37 by bleveque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ LIB_PATH = libft/
 SRC_NAME_1 = create_graph.c \
 			 links.c \
 			 bfs_samere.c \
+			 bfs_add_functions.c \
 
 INC_NAME = lem_in.h
 LIB_NAME = libft.a
