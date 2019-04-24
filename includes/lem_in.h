@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:00:20 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/24 11:14:28 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/24 12:24:58 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ int			add_to_queue(t_link *link, t_queue *queue);
 void		add_to_parent_map(t_node *pos, t_link *link, int *map);
 int 		is_visited(t_link *link, int *tab);
 t_queue		*init_queue();
+void		get_path(t_graph *graph, int *parent_map);
 
 #endif

@@ -6,14 +6,14 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/24 12:09:12 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/24 12:20:08 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
-** TO DO : Cleaner le bordel, condition d'arret de Queue pas claire.
+** TO DO : Cleaner le bordel, gestion des free.
 */
 
 void	print_queue(t_queue *queue)
@@ -119,6 +119,8 @@ int		init_bfs(t_graph *graph)
 	while (++i < graph->nb_nodes)
 		visited_tab[i] = -1;
 	bfs_launcher(graph, visited_tab, parent_map); // while il ret pas -1
+	get_path(graph, parent_map);
+	//reinit visited_tab();
 	//ek_update_flux();
 	return (1);
 }
