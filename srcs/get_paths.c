@@ -6,22 +6,84 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 12:13:49 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/24 15:37:09 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:21:45 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	get_path(t_graph *graph, int *parent_map)
+void	print_path(t_path *path)
+{
+	int 	i;
+
+	i = 0;
+	while (path)
+	{
+		ft_printf("node num %d : %s\n", i, path->node->name);
+		i++;
+		path = path->next;
+	}
+}
+
+t_path	*get_path(t_graph *graph, int *parent_map)
 {
 	int		node;
 	int		introduced_by;
+	t_path	*path;
+	t_path	*tmp;
 
+	if (!(path = (t_path*)malloc(sizeof(t_path))))
+		return (NULL);
 	node = graph->end->hash;
+	path->node = graph->end;
+	path->next = NULL;
 	while (graph->start->hash != node)
 	{
 		introduced_by = parent_map[node];
-		ft_printf("%s introduced by %s\n", graph->tab[node]->name, graph->tab[introduced_by]->name);
+		if (!(tmp = (t_path*)malloc(sizeof(t_path))))
+			return (NULL);
+		tmp->node = graph->tab[introduced_by];
+		tmp->next = path;
 		node = introduced_by;
+		path = tmp;
+	}
+	print_path(path);
+	return (path);
+}
+
+/*
+** Rajouter flow oppose dans le cas ou 1 | 1 s'annulent 
+*/
+
+void	ek_update_flux(t_graph *graph, t_path *path)
+{
+	t_node	*child;
+	t_link	*link_update;
+	t_path	*tmp;
+	
+	while (path->next)
+	{
+		child = path->next->node;
+		link_update = path->node->links;
+		while (child != link_update->child)
+			link_update = link_update->next;
+		link_update->flow = 1;
+		ft_printf("parent [%s] to child [%s] flow = %d \n", path->node->name, 
+				link_update->child->name, link_update->flow);
+		tmp = path;
+		path = path->next;
+		free(tmp);
 	}
 }
+/*
+t_edmond	*update_edmond(t_edmond *edmond, t_path *path)
+{
+	t_edmond	*new;
+
+	if (!(new = (t_edmond*)malloc(sizeof(t_edmond))))
+		return (NULL);
+	new->path = path;
+	new->next = edmond;
+	new->nb_chemin = new_nb_chemin + 1;
+	return (new);
+}*/	

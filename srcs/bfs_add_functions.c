@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 18:12:01 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/24 13:50:09 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:35:20 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	add_to_visited(t_link *link, int *tab)
 	while (tab[i] != -1)
 		i++;
 	tab[i] = link->child->hash;
-	ft_printf("Visited |nb %d |  %d\n", i, tab[i]);
+	//ft_printf("Visited |nb %d |  %d\n", i, tab[i]);
 }
 
 int		add_to_queue(t_link *link, t_queue *queue)
@@ -42,7 +42,7 @@ int		add_to_queue(t_link *link, t_queue *queue)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = add;
-	ft_printf("QUEUE | added to queue : %d\n", tmp->next->node->hash); 
+	//ft_printf("QUEUE | added to queue : %d\n", tmp->next->node->hash); 
 	return (1);
 }
 
@@ -54,8 +54,6 @@ int		add_to_queue(t_link *link, t_queue *queue)
 void	add_to_parent_map(t_node *pos, t_link *link, int *map)
 {
 	map[link->child->hash] = pos->hash;
-	ft_printf("map[%d][%d] | [%s] introduced by [%s]\n", link->child->hash, pos->hash,
-			link->child->name, pos->name);
 }
 
 /*

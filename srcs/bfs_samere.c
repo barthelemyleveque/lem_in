@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/24 15:41:07 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:47:54 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ void	print_queue(t_queue *queue)
 	}
 }
 
+/*
+** Condition d'arret du link child fait bugguer le truc dieu sait pourquoi
+*/ 
+
 int		update_all(t_node *pos, int *map, t_queue *queue, int *v_tab, t_graph 
 		*graph)
 {
@@ -39,6 +43,7 @@ int		update_all(t_node *pos, int *map, t_queue *queue, int *v_tab, t_graph
 	tmp_l = pos->links;
 	while (tmp_l)
 	{
+		//ft_printf("ola\n");
 		if (!(is_visited(tmp_l, v_tab)))
 		{
 			add_to_visited(tmp_l, v_tab);
@@ -46,11 +51,11 @@ int		update_all(t_node *pos, int *map, t_queue *queue, int *v_tab, t_graph
 				return (0);
 			add_to_parent_map(pos, tmp_l, map);
 		}
-		if (tmp_l->child == graph->end)
+		/*if (tmp_l->child == graph->end)
 		{
 			ft_printf("yes\n");
 			return (2);
-		}
+		}*/
 		tmp_l = tmp_l->next;
 	}
 	return (1);
@@ -78,7 +83,6 @@ int		bfs_launcher(t_graph *graph, int *visited_tab, int *parent_map)
 		if (update_all(pos, parent_map, queue, visited_tab, graph) == 2)
 		{
 			// FAIRE UNE FONCTION FREE QUEUE
-			//print_queue(queue);
 			break;
 		}
 		ret = (pos->name == queue->node->name) ? ret + 1 : 0;
@@ -109,20 +113,45 @@ int		init_bfs(t_graph *graph)
 {
 	int			*visited_tab;
 	int			*parent_map;
-	int			i;
+	t_edmond	*edmond;
+	t_path		*path;
+	int			ret;
 
 	if (!(visited_tab = (int*)malloc(sizeof(int) * graph->nb_nodes)))
 		return (0);
 	if (!(parent_map = (int*)malloc(sizeof(int) * PRIME)))
 		return (0);
-	i = -1;
-	while (++i < graph->nb_nodes)
-		visited_tab[i] = -1;
-	bfs_launcher(graph, visited_tab, parent_map); // while il ret pas -1
-	get_path(graph, parent_map);
-	//reinit visited_tab();
-	//ek_update_flux();
+	if (!(edmond = (t_edmond*)malloc(sizeof(t_edmond))))
+		return (0);
+	edmond->nb_chemin = 0;
+	edmond->next = NULL;
+	reinit_tabs(visited_tab, graph->nb_nodes, parent_map, PRIME);
+	ret = 0;
+	while (bfs_launcher(graph, visited_tab, parent_map) != -1)
+	{
+		path = get_path(graph, parent_map);
+		ek_update_flux(graph, path);
+		reinit_tabs(visited_tab, graph->nb_nodes, parent_map, PRIME);
+		//break_paths_in_numerous (edmond number);
+		//edmond = update_edmond(edmond, path);
+	}
 	return (1);
+}
+
+/*
+** remise a zero des tableaux 
+*/ 
+
+void	reinit_tabs(int *visited_tab, int len_tab, int *map, int len_map)
+{
+	int	i;
+
+	i = -1;
+	while (++i < len_tab)
+		visited_tab[i] = -1;
+	i = -1;
+	while (++i < len_map)
+		map[i] = -1;
 }
 
 /*

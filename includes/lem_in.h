@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:00:20 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/24 15:42:54 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/24 17:13:33 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct		s_path
 typedef struct		s_edmond
 {
 	int				nb_chemin;
-	struct s_path	*path;
+	struct s_path	**path;
 	struct s_edmond	*next;
 }					t_edmond;
 
@@ -92,6 +92,8 @@ int			add_to_queue(t_link *link, t_queue *queue);
 void		add_to_parent_map(t_node *pos, t_link *link, int *map);
 int 		is_visited(t_link *link, int *tab);
 t_queue		*init_queue();
-void		get_path(t_graph *graph, int *parent_map);
+t_path		*get_path(t_graph *graph, int *parent_map);
+void		ek_update_flux(t_graph *graph, t_path *path);
+void		reinit_tabs(int *visited_tab, int len_tab, int *map, int len_map);
 
 #endif
