@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/23 19:00:45 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/24 10:57:59 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		update_all(t_node *pos, t_parent *map, t_queue *queue, int *v_tab)
 }
 
 /*
-** Initialiserles valeurs de queue et map avant parce que c cheum sa mere
+** On part de notre node start, on update les positions, 
 ** 
 */ 
 
@@ -62,34 +62,32 @@ int		bfs_launcher(t_graph *graph, int *visited_tab)
 	t_queue		*queue;
 	t_queue		*tmp;
 	t_node		*pos;
+	int			ret;
 
 	pos = graph->start;
-	// on met start = visite accent aigu sur le
+	// on met start = visitE 
 	visited_tab[0] = pos->hash;
-	if (!(queue = (t_queue*)malloc(sizeof(t_queue))))
-		return (0);
-	queue->node = NULL;
-	queue->next = NULL;
-	if (!(parent_map = (t_parent*)malloc(sizeof(t_parent))))
-		return (0);
-	parent_map->h_node = -1;
-	parent_map->h_introby = -1;
-	parent_map->next = NULL;
+	queue = init_queue();
+	parent_map = init_parent_map();
+	ret = 0;
 	while (pos != graph->end)
 	{
 		update_all(pos, parent_map, queue, visited_tab);
-		tmp = queue;
-		if (queue == NULL)
+		ret = (pos->name == queue->node->name) ? ret + 1 : 0;
+		if (ret >= 2)
 		{
-			ft_printf("BFS arrrived to : %s\n", pos->name);
-			return (-1); ;
+			ft_printf("nada que hacer senor\n");
+			return (-1);
 		}
-		queue = queue->next;
+		tmp = queue;
 		pos = tmp->node;
-		print_queue(queue);
-		pos = tmp->node;
-		free(tmp);
+		if (queue->next)
+		{
+			queue = queue->next;
+			free(tmp);
+		}
 	}
+	free(queue);
 	ft_printf("BFS arrrived to : %s\n", pos->name);
 	return (1);
 }
@@ -103,6 +101,7 @@ int		bfs_launcher(t_graph *graph, int *visited_tab)
 int		init_bfs(t_graph *graph)
 {
 	int			*visited_tab;
+	int			*parent_map;
 	int			i;
 
 	if (!(visited_tab = (int*)malloc(sizeof(int) * graph->nb_nodes)))
@@ -113,4 +112,31 @@ int		init_bfs(t_graph *graph)
 	bfs_launcher(graph, visited_tab); // while il ret pas -1
 	//ek_update_flux();
 	return (1);
+}
+
+/*
+** Initialisation des structures 
+*/
+
+t_queue		*init_queue()
+{
+	t_queue	*queue;
+
+	if (!(queue = (t_queue*)malloc(sizeof(t_queue))))
+		return (NULL);
+	queue->node = NULL;
+	queue->next = NULL;
+	return (queue);
+}
+
+t_parent	*init_parent_map()
+{
+	t_parent	*parent_map;
+
+	if (!(parent_map = (t_parent*)malloc(sizeof(t_parent))))
+		return (NULL);
+	parent_map->h_node = -1;
+	parent_map->h_introby = -1;
+	parent_map->next = NULL;
+	return (parent_map);
 }

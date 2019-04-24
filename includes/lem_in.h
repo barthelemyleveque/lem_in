@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:00:20 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/23 18:19:48 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/24 10:13:21 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,16 @@ typedef struct		s_edmond
 }					t_edmond;
 */
 
-int		ft_first_link(t_graph *graph, char *line);
-int		ft_links(t_graph *graph, int fd);
-int		jenkins_hash(char *name);
-void	ft_print_links(t_graph *graph, t_node *room);
-int		init_bfs(t_graph *graph);
-void	add_to_visited(t_link *link, int *tab);
-int		add_to_queue(t_link *link, t_queue *queue);
-int		add_to_parent_map(t_node *pos, t_link *link, t_parent *map);
-int 	is_visited(t_link *link, int *tab);
+int			ft_first_link(t_graph *graph, char *line);
+int			ft_links(t_graph *graph, int fd);
+int			jenkins_hash(char *name);
+void		ft_print_links(t_graph *graph, t_node *room);
+int			init_bfs(t_graph *graph);
+void		add_to_visited(t_link *link, int *tab);
+int			add_to_queue(t_link *link, t_queue *queue);
+int			add_to_parent_map(t_node *pos, t_link *link, t_parent *map);
+int 		is_visited(t_link *link, int *tab);
+t_queue		*init_queue();
+t_parent	*init_parent_map();
 
 #endif
