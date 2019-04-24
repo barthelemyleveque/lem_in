@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:00:20 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/24 14:05:29 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/24 15:40:15 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 typedef struct		s_link
 {
 	int				flow;
+	int				closed;
 	//struct s_link	*opposite;
 	struct s_node	*child;
 	struct s_link	*next;
@@ -66,22 +67,20 @@ typedef struct		s_queue
 
 /* WIP : Structures pour garder en memoire chaque chemin parcouru lors de
 ** chaque BFS
+*/
 
 typedef struct		s_path
 {
-	int				len;
 	struct s_node	*node;
 	struct s_path	*next;
 }					t_path;
 
 typedef struct		s_edmond
 {
-	int				iteration;
-	int				flow;
+	int				nb_chemin;
 	struct s_path	*path;
 	struct s_edmond	*next;
 }					t_edmond;
-*/
 
 int			ft_first_link(t_graph *graph, char *line);
 int			ft_links(t_graph *graph, int fd);

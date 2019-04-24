@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 18:46:51 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/24 13:43:52 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/24 15:41:21 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int		ft_create_link(t_graph *graph, t_node *parent, t_node *enfant)
 		return (0);
 	link->flow = (enfant == graph->start) ? -2 : 0;
 	link->child = enfant;
+	link->closed = 0;
 	link->next = NULL;
 	if (!(parent->links))
 		parent->links = link;
