@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:00:20 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/24 10:13:21 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/24 11:14:28 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,8 @@ typedef struct		s_graph
 }					t_graph;
 
 /*
-** Structures pour le BFS :
+** Structure pour le BFS :
 ** t_queue  = quel node doit etre visite ensuite (indispensable)
-** t_parent = quel node(n0) a introduit ce node(n1) , grace au hash
 */ 
 
 typedef struct		s_queue
@@ -63,13 +62,6 @@ typedef struct		s_queue
 	struct s_node	*node;
 	struct s_queue	*next;
 }					t_queue;
-
-typedef struct		s_parent
-{
-	int				h_node;
-	int				h_introby;
-	struct s_parent	*next;
-}					t_parent;
 
 /* WIP : Structures pour garder en memoire chaque chemin parcouru lors de
 ** chaque BFS
@@ -97,9 +89,8 @@ void		ft_print_links(t_graph *graph, t_node *room);
 int			init_bfs(t_graph *graph);
 void		add_to_visited(t_link *link, int *tab);
 int			add_to_queue(t_link *link, t_queue *queue);
-int			add_to_parent_map(t_node *pos, t_link *link, t_parent *map);
+void		add_to_parent_map(t_node *pos, t_link *link, int *map);
 int 		is_visited(t_link *link, int *tab);
 t_queue		*init_queue();
-t_parent	*init_parent_map();
 
 #endif

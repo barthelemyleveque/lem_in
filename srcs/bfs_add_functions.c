@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 18:12:01 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/24 10:35:51 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/24 12:09:14 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,29 +46,16 @@ int		add_to_queue(t_link *link, t_queue *queue)
 	return (1);
 }
 
-int		add_to_parent_map(t_node *pos, t_link *link, t_parent *map)
-{
-	t_parent	*tmp;
-	t_parent	*add;
+/*
+** map[node][wasintroducedby]
+** permet de partir du hash de end pour remonter jusqu'a la source ! HEHEH
+*/ 
 
-	if (map->h_node == -1)
-	{
-		map->h_introby = pos->hash;
-		map->h_node = link->child->hash;
-		ft_printf("parent | node : [%s] intro par : [%s]\n", link->child->name, pos->name); 
-		return (1);
-	}
-	if (!(add = (t_parent*)malloc(sizeof(t_parent))))
-		return (0);
-	add->h_introby = pos->hash;
-	add->h_node = link->child->hash;
-	add->next = NULL;
-	tmp = map;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = add;
-	ft_printf("parent | node : [%s] intro par : [%s]\n", link->child->name, pos->name); 
-	return (1);
+void	add_to_parent_map(t_node *pos, t_link *link, int *map)
+{
+	map[link->child->hash] = pos->hash;
+	ft_printf("map[%d][%d] | [%s] introduced by [%s]\n", link->child->hash, pos->hash,
+			link->child->name, pos->name);
 }
 
 /*
