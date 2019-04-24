@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:00:20 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/24 12:24:58 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/24 14:05:29 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 typedef struct		s_link
 {
 	int				flow;
+	//struct s_link	*opposite;
 	struct s_node	*child;
 	struct s_link	*next;
 }					t_link;
