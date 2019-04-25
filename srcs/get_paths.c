@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 12:13:49 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/24 17:21:45 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/25 17:18:35 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,13 @@ t_path	*get_path(t_graph *graph, int *parent_map)
 		node = introduced_by;
 		path = tmp;
 	}
-	print_path(path);
+	//print_path(path);
 	return (path);
 }
 
 /*
 ** Rajouter flow oppose dans le cas ou 1 | 1 s'annulent 
+** Modifier pour avoir le lien oppose direct la on comprend R
 */
 
 void	ek_update_flux(t_graph *graph, t_path *path)
@@ -60,16 +61,23 @@ void	ek_update_flux(t_graph *graph, t_path *path)
 	t_node	*child;
 	t_link	*link_update;
 	t_path	*tmp;
+	t_link	*link_opp;
 	
 	while (path->next)
 	{
 		child = path->next->node;
+		link_opp = path->next->node->links;
 		link_update = path->node->links;
 		while (child != link_update->child)
 			link_update = link_update->next;
-		link_update->flow = 1;
-		ft_printf("parent [%s] to child [%s] flow = %d \n", path->node->name, 
-				link_update->child->name, link_update->flow);
+		while (path->node != link_opp->child)
+			link_opp = link_opp->next;
+		if (link_opp->flow == 1)
+			link_opp->flow = 0;
+		else
+			link_update->flow = 1;
+		//ft_printf("parent [%s] to child [%s] flow = %d closed : %d\n", path->node->name, link_update->child->name, link_update->flow, link_update->closed);
+		//ft_printf("parent [%s] to child [%s] flow = %d closed : %d \n\n", path->next->node->name, link_opp->child->name, link_opp->flow, link_opp->closed);
 		tmp = path;
 		path = path->next;
 		free(tmp);
