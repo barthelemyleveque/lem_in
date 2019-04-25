@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:00:20 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/24 17:13:33 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/25 14:10:43 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct		s_node
 
 typedef struct		s_graph
 {
-	int				ants;
+	int				nb_ants;
 	int				nb_nodes;
 	struct s_node	*start;
 	struct s_node	*end;
