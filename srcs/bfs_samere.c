@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/25 17:18:30 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/25 19:03:24 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,9 @@ int		bfs_launcher(t_graph *graph, int *visited_tab, int *parent_map)
 			// FAIRE UNE FONCTION FREE QUEUE
 			break;
 		}
-		ret = (pos->name == queue->node->name) ? ret + 1 : 0;
-		if (ret >= 2)
-		{
-			ft_printf("nada que hacer senor\n");
+		if (ret >= 2 || !(queue->node))
 			return (-1);
-		}
+		ret = (pos->name == queue->node->name) ? ret + 1 : 0;
 		tmp = queue;
 		pos = tmp->node;
 		if (queue->next)
@@ -134,6 +131,7 @@ int		init_bfs(t_graph *graph)
 		//ft_free_paths();
 		ft_printf("\n\n");
 	}
+	ft_printf("DONE \n");
 	return (1);
 }
 

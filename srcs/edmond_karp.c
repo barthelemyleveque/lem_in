@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 14:49:26 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/25 17:12:59 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/25 19:03:17 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ t_path		*find_new_path(t_graph *graph)
 			if (!(tmp = (t_path*)malloc(sizeof(t_path))))
 				return (NULL);
 			tmp->node = link->child;
-			link->closed = 1;
 			node = link->child;
 			tmp->next = NULL;
 			path->next = tmp;
@@ -69,8 +68,13 @@ void	open_paths(t_graph *graph, t_path **tab_paths, int boucle)
 		path = tab_paths[i];
 		while (path)
 		{
-			tmp = tab_paths[i]->node->links;
-			follow = tab_paths[i]->next->node;
+			tmp = path->node->links;
+			if (!(path->next))
+			{
+				tmp->closed = 0;
+				break ;
+			}
+			follow = path->next->node;
 			while (tmp->child != follow)
 				tmp = tmp->next;
 			tmp->closed = 0;
