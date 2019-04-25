@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/24 17:47:54 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/25 17:18:30 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int		update_all(t_node *pos, int *map, t_queue *queue, int *v_tab, t_graph
 */ 
 
 int		bfs_launcher(t_graph *graph, int *visited_tab, int *parent_map)
-{
+ {
 	t_queue		*queue;
 	t_queue		*tmp;
 	t_node		*pos;
@@ -115,25 +115,24 @@ int		init_bfs(t_graph *graph)
 	int			*parent_map;
 	t_edmond	*edmond;
 	t_path		*path;
-	int			ret;
+	int			iter;
 
 	if (!(visited_tab = (int*)malloc(sizeof(int) * graph->nb_nodes)))
 		return (0);
 	if (!(parent_map = (int*)malloc(sizeof(int) * PRIME)))
 		return (0);
-	if (!(edmond = (t_edmond*)malloc(sizeof(t_edmond))))
-		return (0);
-	edmond->nb_chemin = 0;
-	edmond->next = NULL;
 	reinit_tabs(visited_tab, graph->nb_nodes, parent_map, PRIME);
-	ret = 0;
+	iter = 0;
 	while (bfs_launcher(graph, visited_tab, parent_map) != -1)
 	{
+		iter++;
+		ft_printf("\n -------------  NEW BFS A %d CHEMINS -----------\n", iter);
 		path = get_path(graph, parent_map);
 		ek_update_flux(graph, path);
 		reinit_tabs(visited_tab, graph->nb_nodes, parent_map, PRIME);
-		//break_paths_in_numerous (edmond number);
-		//edmond = update_edmond(edmond, path);
+		edmond = update_edmond(graph, edmond, iter);
+		//ft_free_paths();
+		ft_printf("\n\n");
 	}
 	return (1);
 }
