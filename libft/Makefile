@@ -6,7 +6,7 @@
 #    By: bleveque <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/06 09:31:26 by bleveque          #+#    #+#              #
-#    Updated: 2019/03/26 11:41:34 by bleveque         ###   ########.fr        #
+#    Updated: 2019/04/26 13:33:28 by anrzepec         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@
 
 NAME = libft.a
 
-SRCS_NAME = ft_atoi.c \
+SRCS_NAME = ft_strnum.c \
+	  ft_atoi.c \
 	  ft_bzero.c \
 	  ft_isalnum.c \
 	  ft_isalpha.c \
