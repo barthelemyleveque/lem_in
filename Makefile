@@ -6,7 +6,7 @@
 #    By: bleveque <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/11 10:15:06 by bleveque          #+#    #+#              #
-#    Updated: 2019/04/26 11:08:00 by bleveque         ###   ########.fr        #
+#    Updated: 2019/04/26 15:12:44 by anrzepec         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SRCS_PATH = srcs/
 OBJS_PATH = objs/
 LIB_PATH = libft/
 
-SRC_NAME_1 = create_graph.c \
+SRC_NAME_1 = ft_parsing_tools.c \
+			 create_graph.c \
 			 links.c \
 			 bfs_samere.c \
 			 bfs_add_functions.c \
@@ -38,8 +39,8 @@ LIB = $(addprefix $(LIB_PATH),$(LIB_NAME))
 RED = \x1b[31;5;01m
 BLUE = \033[38;5;177m
 
-CC = clang -g
-CFLAGS =  
+CC = gcc
+CFLAGS =
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c $(INC)
 	@mkdir $(OBJS_PATH) 2> /dev/null || true

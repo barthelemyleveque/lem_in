@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:00:20 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/26 12:59:35 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/26 14:10:48 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 # include "../libft/get_next_line.h"
 # define PRIME 9931
 
+/* ERROR RETURNS */
+
+# define M_FAIL -1
+# define O_FAIL -2
+# define A_FAIL -3
+# define N_FAIL -4
 /*
 ** Structures pour construire le graph :
 ** t_link = liste des child_nodes d'une salle, et leur flow 
@@ -100,5 +106,10 @@ void		reinit_tabs(int *visited_tab, int len_tab, int *map, int len_map);
 t_edmond	*update_edmond(t_graph *graph, t_edmond *old_eddy, int boucle);
 void		print_path(t_path *path);
 void		check_multiple_rooms(t_graph *graph, t_edmond *edmond, int *visited_tab);
+
+/*  PARSING TOOLS  */
+
+int			ft_tablen(char **tab);
+void		ft_free_tab(char **tab);
 
 #endif
