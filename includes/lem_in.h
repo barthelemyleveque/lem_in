@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:00:20 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/26 12:59:35 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/26 14:46:27 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int			init_bfs(t_graph *graph);
 void		add_to_visited(t_link *link, int *tab);
 int			add_to_queue(t_link *link, t_queue *queue);
 void		add_to_parent_map(t_node *pos, t_link *link, int *map);
-int 		is_visited(t_link *link, int *tab);
+int 		is_visited(t_link *link, int *tab, t_node *node);
 t_queue		*init_queue();
 t_path		*get_path(t_graph *graph, int *parent_map);
 void		ek_update_flux(t_graph *graph, t_path *path);
