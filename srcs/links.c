@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 18:46:51 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/26 15:50:14 by anrzepec         ###   ########.fr       */
+/*   Updated: 2019/04/26 16:16:44 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,21 @@
 /*
 ** flow pour les liens vers start = -2 pour eviter de revenir a la source ?
 */
+
+void	ft_get_opposite(t_graph *graph, t_node *n1, t_node *n2)
+{
+	t_link *tracer;
+	t_link *tracer2;
+
+	tracer = n1->links;
+	while (tracer->child != n2)
+		tracer = tracer->next;
+	tracer2 = n2->links;
+	while (tracer2->child != n1)
+		tracer2 = tracer2->next;
+	tracer2->opposite = tracer;
+	tracer->opposite = tracer2;
+}
 
 int		ft_create_link(t_graph *graph, t_node *parent, t_node *enfant)
 {
@@ -63,6 +78,7 @@ int		ft_link_link(char **tab, t_graph *graph)
 		return (M_FAIL);
 	if (!(ft_create_link(graph, graph->tab[hash_1], graph->tab[hash_0])))
 		return (M_FAIL);
+	ft_get_opposite(graph, graph->tab[hash_1], graph->tab[hash_0]);
 	return (1);
 }
 
