@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 14:49:26 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/26 14:19:30 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/26 17:51:43 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_path		*find_new_path(t_graph *graph)
 		if ((link->child == graph->end) || (link->flow == 1 && link->closed == 0))
 		{
 			link->closed = 1;
-			//link->child->visited = 1;
 			//ft_printf("node : %s et lien vers %s is closed\n", node->name, link->child->name);
 			if (!(tmp = (t_path*)malloc(sizeof(t_path))))
 				return (NULL);

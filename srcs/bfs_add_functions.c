@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 18:12:01 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/26 16:37:37 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/26 18:51:43 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,42 +65,29 @@ int		is_visited(t_link *link, int *tab, t_node *node)
 {
 	int	i;
 	t_link	*tmp;
-	t_node 	*opp_node;
-	t_link	*opp_link;
+	t_link	*plus_one;
 
 	if (link->flow == 1 || link->flow == -2 || link->flow == -1)
 		return (1);
 	i = 0;
-	opp_link = link->child->links;
+	plus_one = link->child->links;
 	tmp = node->links;
 	while (tmp)
 	{
-		if (tmp->flow == 1)
+		if (tmp->flow == 1 && node->special != 1)
 		{
 			i = 1;
-			break ;
+			break;
 		}
 		tmp = tmp->next;
 	}
-	while ((opp_link) && (opp_link->child!= node))
-		opp_link = opp_link->next;
-	/*
 	if (i == 1)
 	{
-		ft_printf("Node de depart : %s\n", node->name);
-		ft_printf("Child a l'etude : %s\n", link->child->name);
-		ft_printf("Node alreay as a flow to: %s\n", tmp->child->name);
-		if (opp_link)
-			ft_printf("Opposite link is going to : %s\n", opp_link->child->name);
-		if (opp_link->flow == 0)
-		{
-			ft_printf("no go to queue or parent\n\n");
+		if (node->special != -1 && link->opposite->flow != 1)
 			return (1);
-		}
-		ft_printf("will go to queue\n\n");
-	}*/
-	// if le node a deja un flow sortant, seulement si c'est le link oppose tu
-	// peux y aller
+		ft_printf("special : %s\n", link->child->name);
+		link->child->special = -1;
+	}
 	i = 0;
 	while (tab[i] != -1)
 	{

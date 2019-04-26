@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 12:13:49 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/26 16:37:15 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/26 18:10:32 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,15 @@ void	ek_update_flux(t_graph *graph, t_path *path)
 	while (path->next)
 	{
 		child = path->next->node;
+		if (child->special == -1)
+			child->special = 0;
 		link_opp = path->next->node->links;
 		link_update = path->node->links;
 		while (child != link_update->child)
 			link_update = link_update->next;
 		while (path->node != link_opp->child)
 			link_opp = link_opp->next;
-		if (link_opp->flow == 1)
+		if (link_opp->flow == 1) 
 		{
 			link_opp->flow = 0;
 			link_update->flow = 0;
