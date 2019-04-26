@@ -6,7 +6,7 @@
 #    By: bleveque <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/11 10:15:06 by bleveque          #+#    #+#              #
-#    Updated: 2019/04/25 15:37:44 by bleveque         ###   ########.fr        #
+#    Updated: 2019/04/26 11:08:00 by bleveque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC_NAME_1 = create_graph.c \
 			 bfs_add_functions.c \
 			 get_paths.c \
 			 edmond_karp.c \
+			 check_functions.c \
 
 INC_NAME = lem_in.h
 LIB_NAME = libft.a

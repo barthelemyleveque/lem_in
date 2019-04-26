@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 12:13:49 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/25 17:18:35 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/26 11:35:25 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,3 @@ void	ek_update_flux(t_graph *graph, t_path *path)
 		free(tmp);
 	}
 }
-/*
-t_edmond	*update_edmond(t_edmond *edmond, t_path *path)
-{
-	t_edmond	*new;
-
-	if (!(new = (t_edmond*)malloc(sizeof(t_edmond))))
-		return (NULL);
-	new->path = path;
-	new->next = edmond;
-	new->nb_chemin = new_nb_chemin + 1;
-	return (new);
-}*/	

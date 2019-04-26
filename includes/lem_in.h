@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:00:20 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/25 16:05:50 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/26 12:59:35 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct		s_link
 typedef struct		s_node
 {
 	int				hash;
+	int				visited;
 	int				x_coord;
 	int				y_coord;
 	int				special; // 0 node / 1 start / 2 end
@@ -71,6 +72,7 @@ typedef struct		s_queue
 
 typedef struct		s_path
 {
+	int				len;
 	struct s_node	*node;
 	struct s_path	*next;
 }					t_path;
@@ -97,5 +99,6 @@ void		ek_update_flux(t_graph *graph, t_path *path);
 void		reinit_tabs(int *visited_tab, int len_tab, int *map, int len_map);
 t_edmond	*update_edmond(t_graph *graph, t_edmond *old_eddy, int boucle);
 void		print_path(t_path *path);
+void		check_multiple_rooms(t_graph *graph, t_edmond *edmond, int *visited_tab);
 
 #endif

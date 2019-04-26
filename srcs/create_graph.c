@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:01:50 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/24 13:40:30 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/26 12:59:52 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	ft_fill_node(t_graph *graph, char **tab, t_node *node, int spec)
 	node->name = ft_strdup(tab[0]);
 	node->x_coord = ft_atoi(tab[1]);
 	node->y_coord = ft_atoi(tab[2]);
+	node->visited = 0;
 	node->special = spec;
 	if (spec == 1)
 		graph->start = node;

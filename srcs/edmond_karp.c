@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 14:49:26 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/25 19:03:17 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/26 11:02:51 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ void	open_paths(t_graph *graph, t_path **tab_paths, int boucle)
 		i++;
 	}
 }
-				
-
 
 t_edmond	*update_edmond(t_graph *graph, t_edmond *old_eddy, int boucle)
 {
