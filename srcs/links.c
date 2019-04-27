@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 18:46:51 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/26 16:16:44 by anrzepec         ###   ########.fr       */
+/*   Updated: 2019/04/27 17:27:48 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,19 @@
 ** flow pour les liens vers start = -2 pour eviter de revenir a la source ?
 */
 
-void	ft_get_opposite(t_graph *graph, t_node *n1, t_node *n2)
+void	ft_get_opposite(t_link *l1, t_link *l2)
 {
-	t_link *tracer;
-	t_link *tracer2;
-
-	tracer = n1->links;
-	while (tracer->child != n2)
-		tracer = tracer->next;
-	tracer2 = n2->links;
-	while (tracer2->child != n1)
-		tracer2 = tracer2->next;
-	tracer2->opposite = tracer;
-	tracer->opposite = tracer2;
+	l1->opposite = l2;
+	l2->opposite = l1;
 }
-
-int		ft_create_link(t_graph *graph, t_node *parent, t_node *enfant)
+int		ft_create_link(t_graph *graph, t_node *parent, t_node *enfant, t_link **opp)
 {
 	t_link	*link;
 	t_link	*tmp;
 
 	if (!(link = (t_link*)malloc(sizeof(t_link))))
 		return (M_FAIL);
-	link->flow = (enfant == graph->start) ? -2 : 0;
+	link->flow = 0;
 	link->child = enfant;
 	link->closed = 0;
 	link->next = NULL;
@@ -51,6 +41,7 @@ int		ft_create_link(t_graph *graph, t_node *parent, t_node *enfant)
 			tmp = tmp->next;
 		tmp->next = link;
 	}
+	*opp = link;
 	return (1);
 }
 
@@ -61,24 +52,26 @@ int		ft_create_link(t_graph *graph, t_node *parent, t_node *enfant)
 
 int		ft_link_link(char **tab, t_graph *graph)
 {
-	int	hash_0;
-	int hash_1;
+	int		hash_0;
+	int 	hash_1;
+	t_link	*l1;
+	t_link	*l2;
 
+	l1 = NULL;
+	l2 = NULL;
 	hash_0 = jenkins_hash(tab[0]);
 	hash_1 = jenkins_hash(tab[1]);
 	printf("hash: %d\n", hash_0);
 	while (graph->tab[hash_0]->hash != hash_0)
-	{
 		hash_0 = hash_0 < PRIME ? hash_0 + 1 : 0;
-	}
 	while (graph->tab[hash_1]->hash != hash_1)
 		hash_1 = hash_1 < PRIME ? hash_1 + 1 : 0;
 	//ft_printf("hash 0 : %s hash 1 : %s\n", graph->tab[hash_0]->name, graph->tab[hash_1]->name);
-	if (!(ft_create_link(graph, graph->tab[hash_0], graph->tab[hash_1])))
+	if (!(ft_create_link(graph, graph->tab[hash_0], graph->tab[hash_1], &l1)))
 		return (M_FAIL);
-	if (!(ft_create_link(graph, graph->tab[hash_1], graph->tab[hash_0])))
+	if (!(ft_create_link(graph, graph->tab[hash_1], graph->tab[hash_0], &l2)))
 		return (M_FAIL);
-	ft_get_opposite(graph, graph->tab[hash_1], graph->tab[hash_0]);
+	ft_get_opposite(l1, l2);
 	return (1);
 }
 

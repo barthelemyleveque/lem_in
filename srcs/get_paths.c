@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 12:13:49 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/26 18:10:32 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/27 17:27:46 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,31 +58,21 @@ t_path	*get_path(t_graph *graph, int *parent_map)
 
 void	ek_update_flux(t_graph *graph, t_path *path)
 {
-	t_node	*child;
+	t_node	*next;
 	t_link	*link_update;
 	t_path	*tmp;
-	t_link	*link_opp;
 	
 	while (path->next)
 	{
-		child = path->next->node;
-		if (child->special == -1)
-			child->special = 0;
-		link_opp = path->next->node->links;
 		link_update = path->node->links;
-		while (child != link_update->child)
+		next = path->next->node;
+		while (link_update->child != next)
 			link_update = link_update->next;
-		while (path->node != link_opp->child)
-			link_opp = link_opp->next;
-		if (link_opp->flow == 1) 
-		{
-			link_opp->flow = 0;
-			link_update->flow = 0;
-		}
-		else
-			link_update->flow = 1;
+		link_update->flow += 1;
+		link_update->opposite->flow -= 1;
 		//ft_printf("parent [%s] to child [%s] flow = %d closed : %d\n", path->node->name, link_update->child->name, link_update->flow, link_update->closed);
-		//ft_printf("parent [%s] to child [%s] flow = %d closed : %d \n\n", path->next->node->name, link_opp->child->name, link_opp->flow, link_opp->closed);
+		//ft_printf("child [%s] to parent [%s] flow = %d closed : %d\n", link_update->child->name, path->node->name, link_update->opposite->flow, link_update->opposite->closed);
+		ft_printf("\n");
 		tmp = path;
 		path = path->next;
 		free(tmp);

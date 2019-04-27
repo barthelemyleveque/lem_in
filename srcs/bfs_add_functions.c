@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 18:12:01 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/26 18:51:43 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/27 17:27:47 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,47 @@ void	add_to_parent_map(t_node *pos, t_link *link, int *map)
  ** peut prendre le chemin
  */
 
-int		is_visited(t_link *link, int *tab, t_node *node)
+int		is_visited(t_link *link, int *visited, t_node *node)
 {
-	int	i;
-	t_link	*tmp;
-	t_link	*plus_one;
+	int		i;
+	t_link	*check;
 
-	if (link->flow == 1 || link->flow == -2 || link->flow == -1)
+	if (link->flow >= 1)
 		return (1);
-	i = 0;
-	plus_one = link->child->links;
-	tmp = node->links;
+	i = -1;
+	while (visited[++i] != -1)
+		if (visited[i] == link->child->hash)
+			return (1);
+	check = node->links;
+	while (check)
+	{
+		if (check->flow == -1)
+		{
+			//ft_printf("-- node : %s, a un flow vers : %s de %d -- \n", node->name, check->child->name, check->flow);
+			break;
+		}
+		//ft_printf("XX node : %s, a un flow vers : %s de %d -- \n", node->name, check->child->name, check->flow);
+		check = check->next;
+	}
+	if (check)
+	{
+		// Si check existe, on a le lien sortant du node qui a un opposite entrant avec un flow == 1;
+		ft_printf("road from %s to %s is : ", node->name, link->child->name);
+		if (link->child == check->child)
+		{
+			ft_printf("cancelling flow | \nlink->cheld : %s  check->child : %s\n", link->child->name, check->child->name);
+			return (0);
+		}
+		else
+		{
+			ft_printf("not cancelling flow\n");
+			return (1);
+		}
+	}
+	return (0);
+}
+
+	/*
 	while (tmp)
 	{
 		if (tmp->flow == 1 && node->special != 1)
@@ -81,19 +111,12 @@ int		is_visited(t_link *link, int *tab, t_node *node)
 		}
 		tmp = tmp->next;
 	}
+	
 	if (i == 1)
 	{
+		ft_printf("node special: %s, hash: %s\n", node->name, link->child->name);
 		if (node->special != -1 && link->opposite->flow != 1)
 			return (1);
 		ft_printf("special : %s\n", link->child->name);
 		link->child->special = -1;
-	}
-	i = 0;
-	while (tab[i] != -1)
-	{
-		if (tab[i] == link->child->hash)
-			return (1);
-		i++;
-	}
-	return (0);
-}
+	}*/

@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/26 14:46:46 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/27 17:00:10 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ int		update_all(t_node *pos, int *map, t_queue *queue, int *v_tab, t_graph
 		//ft_printf("name of child : %s\n", tmp_l->child->name);
 		if (!(is_visited(tmp_l, v_tab, pos)))
 		{
-			add_to_visited(tmp_l, v_tab);
 			if (!(add_to_queue(tmp_l, queue)))
 				return (0);
+			add_to_visited(tmp_l, v_tab);
 			add_to_parent_map(pos, tmp_l, map);
 		}
 		/*if (tmp_l->child == graph->end)
