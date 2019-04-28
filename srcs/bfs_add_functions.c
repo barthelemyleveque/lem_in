@@ -86,15 +86,18 @@ int		is_visited(t_link *link, int *visited, t_node *node)
 	if (check)
 	{
 		// Si check existe, on a le lien sortant du node qui a un opposite entrant avec un flow == 1;
-		ft_printf("road from %s to %s is : ", node->name, link->child->name);
+		//ft_printf("road from %s to %s is : ", node->name, link->child->name);
 		if (link->child == check->child)
 		{
-			ft_printf("cancelling flow | \nlink->cheld : %s  check->child : %s\n", link->child->name, check->child->name);
+			link->child->visited = 1;
+			//ft_printf("cancelling flow | \nlink->cheld : %s  check->child : %s\n", link->child->name, check->child->name);
 			return (0);
 		}
+		else if (node->visited == 1)
+				return (0);
 		else
 		{
-			ft_printf("not cancelling flow\n");
+			//ft_printf("not cancelling flow\n");
 			return (1);
 		}
 	}

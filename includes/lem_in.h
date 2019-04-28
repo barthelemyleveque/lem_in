@@ -102,7 +102,7 @@ int 		is_visited(t_link *link, int *tab, t_node *node);
 t_queue		*init_queue();
 t_path		*get_path(t_graph *graph, int *parent_map);
 void		ek_update_flux(t_graph *graph, t_path *path);
-void		reinit_tabs(int *visited_tab, int len_tab, int *map, int len_map);
+void		reinit_tabs(int *visited_tab, int len_tab, int *map, int len_map, t_graph						*graph);
 t_edmond	*update_edmond(t_graph *graph, t_edmond *old_eddy, int boucle);
 void		print_path(t_path *path);
 void		check_multiple_rooms(t_graph *graph, t_edmond *edmond, int *visited_tab);

@@ -113,12 +113,15 @@ int		init_bfs(t_graph *graph)
 	t_edmond	*edmond;
 	t_path		*path;
 	int			iter;
+	int 		i;
 
 	if (!(visited_tab = (int*)malloc(sizeof(int) * graph->nb_nodes)))
 		return (0);
 	if (!(parent_map = (int*)malloc(sizeof(int) * PRIME)))
 		return (0);
-	reinit_tabs(visited_tab, graph->nb_nodes, parent_map, PRIME);
+	i = -1;
+	while (++i <= graph->nb_nodes)
+		visited_tab[i] = -1;
 	iter = 0;
 	while (bfs_launcher(graph, visited_tab, parent_map) != -1)
 	{
@@ -126,11 +129,11 @@ int		init_bfs(t_graph *graph)
 		ft_printf("\n -------------  NEW BFS A %d CHEMINS -----------\n", iter);
 		path = get_path(graph, parent_map);
 		ek_update_flux(graph, path);
-		reinit_tabs(visited_tab, graph->nb_nodes, parent_map, PRIME);
+		reinit_tabs(visited_tab, graph->nb_nodes, parent_map, PRIME, graph);
 		edmond = update_edmond(graph, edmond, iter);
 		//ft_free_paths();
 		check_multiple_rooms(graph, edmond, visited_tab);
-		reinit_tabs(visited_tab, graph->nb_nodes, parent_map, PRIME);
+		reinit_tabs(visited_tab, graph->nb_nodes, parent_map, PRIME, graph);
 		ft_printf("\n\n");
 	}
 	ft_printf("DONE \n");
@@ -138,16 +141,25 @@ int		init_bfs(t_graph *graph)
 }
 
 /*
-** remise a zero des tableaux 
+** remise a zero des tableaux et des visited
 */ 
 
-void	reinit_tabs(int *visited_tab, int len_tab, int *map, int len_map)
+void	reinit_tabs(int *visited_tab, int len_tab, int *map, int len_map, t_graph
+					*graph)
 {
-	int	i;
+	int		i;
+	t_node	*node;
 
 	i = -1;
-	while (++i < len_tab)
+	while (++i <= len_tab)
+	{
+		if (visited_tab[i] != -1)
+		{
+			node = graph->tab[visited_tab[i]];
+			node->visited = 0;
+		}
 		visited_tab[i] = -1;
+	}
 	i = -1;
 	while (++i < len_map)
 		map[i] = -1;
