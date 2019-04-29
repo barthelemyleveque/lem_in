@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:01:50 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/27 16:06:27 by anrzepec         ###   ########.fr       */
+/*   Updated: 2019/04/29 15:15:16 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int		ft_fill_node(t_graph *graph, char **tab, t_node *node, int spec)
 	//ft_printf("name : %s\n", node->name);
 	node->hash = jenkins_hash(node->name);
 	//ft_printf("hash %d\n", node->hash);
-	printf("node->hash: %d\n", node->hash);
 	while (graph->tab[node->hash])
 	{
 		//printf("yes and hash is : %d, name : %s\n", node->hash, graph->tab[node->hash]->name);
@@ -91,7 +90,6 @@ int		ft_create_node(t_graph *graph, char *line, int spec, int fd)
 	}
 	if (ft_tablen(tab) == 1)
 	{
-		printf("tab[0]: %s\n", tab[0]);
 		ft_free_tab(tab);
 		return (0);
 	}

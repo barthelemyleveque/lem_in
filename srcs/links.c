@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 18:46:51 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/27 17:27:48 by anrzepec         ###   ########.fr       */
+/*   Updated: 2019/04/29 15:14:40 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int		ft_link_link(char **tab, t_graph *graph)
 	l2 = NULL;
 	hash_0 = jenkins_hash(tab[0]);
 	hash_1 = jenkins_hash(tab[1]);
-	printf("hash: %d\n", hash_0);
+	//printf("hash: %d\n", hash_0);
 	while (graph->tab[hash_0]->hash != hash_0)
 		hash_0 = hash_0 < PRIME ? hash_0 + 1 : 0;
 	while (graph->tab[hash_1]->hash != hash_1)

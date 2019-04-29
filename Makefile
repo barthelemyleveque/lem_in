@@ -6,7 +6,7 @@
 #    By: bleveque <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/11 10:15:06 by bleveque          #+#    #+#              #
-#    Updated: 2019/04/26 15:12:44 by anrzepec         ###   ########.fr        #
+#    Updated: 2019/04/29 15:16:55 by bleveque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ INC = $(addprefix $(INC_PATH),$(INC_NAME))
 LIB = $(addprefix $(LIB_PATH),$(LIB_NAME))
 
 RED = \x1b[31;5;01m
-BLUE = \033[38;5;177m
+GREEN = \x1b[32;01m
 
 CC = gcc
 CFLAGS =
@@ -49,11 +49,13 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c $(INC)
 all : lib $(NAME_1) 
 
 lib :
+	@printf "Compiling libft ...\r"
 	@make -C libft
 
 $(NAME_1) : $(OBJS_1) $(LIB) 
 	@$(CC) $(LIB) $^ -o $@
-	@echo "$(RED)lem_in has compiled ✓✓$(END)"
+	@printf "Compiling lem_in ...\r"
+	@echo "$(RED)lem_in$(END)$(GREEN) has compiled ✓✓$(END)"
 
 clean :
 	@/bin/rm -f $(OBJS_1) 
