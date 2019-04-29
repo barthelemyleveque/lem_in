@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 12:13:49 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/27 17:27:46 by anrzepec         ###   ########.fr       */
+/*   Updated: 2019/04/29 13:48:06 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	print_path(t_path *path)
 	int 	i;
 
 	i = 0;
+	ft_printf("(Len of this path : %d)\n\n", path->len);
 	while (path)
 	{
 		ft_printf("node num %d : %s\n", i, path->node->name);

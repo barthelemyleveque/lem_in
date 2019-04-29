@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 14:49:26 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/26 17:51:43 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/29 13:47:37 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_path		*find_new_path(t_graph *graph)
 	t_path	*path;
 	t_path	*tmp;
 	t_path	*start;
+	int		len;
 
 	link = graph->start->links;
 	node = graph->start;
@@ -32,10 +33,12 @@ t_path		*find_new_path(t_graph *graph)
 	path->node = node;
 	path->next = NULL;
 	start = path;
+	len = 0;
 	while (node != graph->end)
 	{
 		if ((link->child == graph->end) || (link->flow == 1 && link->closed == 0))
 		{
+			len++;
 			link->closed = 1;
 			//ft_printf("node : %s et lien vers %s is closed\n", node->name, link->child->name);
 			if (!(tmp = (t_path*)malloc(sizeof(t_path))))
@@ -45,13 +48,17 @@ t_path		*find_new_path(t_graph *graph)
 			tmp->next = NULL;
 			path->next = tmp;
 			if (link->child == graph->end)
+			{
+				start->len = len;
 				return (start);
+			}
 			path = path->next;
 			link = path->node->links;
 		}
 		else
 			link = link->next;
 	}
+	start->len = len;
 	return (start);
 }
 
