@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/29 13:33:00 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/29 17:07:02 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int		update_all(t_node *pos, int *map, t_queue *queue, int *v_tab, t_graph
 	tmp_l = pos->links;
 	while (tmp_l)
 	{
-		//ft_printf("name of child : %s\n", tmp_l->child->name);
 		if (!(is_visited(tmp_l, v_tab, pos)))
 		{
 			if (!(add_to_queue(tmp_l, queue)))
@@ -51,11 +50,6 @@ int		update_all(t_node *pos, int *map, t_queue *queue, int *v_tab, t_graph
 			add_to_visited(tmp_l, v_tab);
 			add_to_parent_map(pos, tmp_l, map);
 		}
-		/*if (tmp_l->child == graph->end)
-		{
-			ft_printf("yes\n");
-			return (2);
-		}*/
 		tmp_l = tmp_l->next;
 	}
 	return (1);
@@ -74,7 +68,6 @@ int		bfs_launcher(t_graph *graph, int *visited_tab, int *parent_map)
 	int			ret;
 
 	pos = graph->start;
-	// on met start = visitE 
 	visited_tab[0] = pos->hash;
 	queue = init_queue();
 	ret = 0;
@@ -131,7 +124,6 @@ int		init_bfs(t_graph *graph)
 		ek_update_flux(graph, path);
 		reinit_tabs(visited_tab, graph->nb_nodes, parent_map, PRIME, graph);
 		edmond = update_edmond(graph, edmond, iter);
-		//ft_free_paths();
 		check_multiple_rooms(graph, edmond, visited_tab);
 		reinit_tabs(visited_tab, graph->nb_nodes, parent_map, PRIME, graph);
 		ft_printf("\n\n");
