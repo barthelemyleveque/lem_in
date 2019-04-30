@@ -6,7 +6,7 @@
 #    By: bleveque <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/11 10:15:06 by bleveque          #+#    #+#              #
-#    Updated: 2019/04/29 15:16:55 by bleveque         ###   ########.fr        #
+#    Updated: 2019/04/30 14:03:46 by bleveque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC_NAME_1 = ft_parsing_tools.c \
 			 get_paths.c \
 			 edmond_karp.c \
 			 check_functions.c \
+			 nb_ants.c \
 
 INC_NAME = lem_in.h
 LIB_NAME = libft.a

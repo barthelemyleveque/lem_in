@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 12:13:49 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/29 13:48:06 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/30 18:58:45 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,29 @@ void	print_path(t_path *path)
 		ft_printf("node num %d : %s\n", i, path->node->name);
 		i++;
 		path = path->next;
+	}
+}
+
+void	print_tab_paths(t_path **tab_paths, int len, int nb_ants)
+{
+	int 	i;
+	int		y;
+	t_path	*path;
+
+	i = 0;
+	y = -1;
+	ft_printf("Nb Ants a faire traverser : %d\n\n", nb_ants);
+	while (++y < len)
+	{
+		path = tab_paths[y];
+		ft_printf("(Len of this path : %d)\n", path->len);
+		ft_printf("Ants going through : %d\n", path->nb_ants);
+		while (path)
+		{
+			ft_printf("node num %d : %s\n", i, path->node->name);
+			i++;
+			path = path->next;
+		}
 	}
 }
 

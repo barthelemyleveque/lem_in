@@ -6,7 +6,7 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:41:28 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/29 17:07:04 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/30 18:58:10 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct		s_queue
 typedef struct		s_path
 {
 	int				len;
+	int				nb_ants;
 	struct s_node	*node;
 	struct s_path	*next;
 }					t_path;
@@ -106,6 +107,8 @@ void		reinit_tabs(int *visited_tab, int len_tab, int *map, int len_map, t_graph	
 t_edmond	*update_edmond(t_graph *graph, t_edmond *old_eddy, int boucle);
 void		print_path(t_path *path);
 void		check_multiple_rooms(t_graph *graph, t_edmond *edmond, int *visited_tab);
+void		find_best_path(t_graph *graph, t_edmond *edmond);
+void		print_tab_paths(t_path **tab_paths, int len, int nb_ants);
 
 /*  PARSING TOOLS  */
 

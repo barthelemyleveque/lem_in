@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 14:49:26 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/29 17:06:57 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/04/30 19:02:09 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ t_edmond	*update_edmond(t_graph *graph, t_edmond *old_eddy, int boucle)
 	while (++i < boucle)
 	{
 		path = find_new_path(graph);
+		path->nb_ants = 0;
 		ft_printf("\n ------- PATH number %d -------- \n", i);
 		print_path(path);
 		tab_paths[i] = path;
