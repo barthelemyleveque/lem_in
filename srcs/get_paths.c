@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 12:13:49 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/01 18:05:35 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/01 18:38:24 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	print_tab_paths(t_path **tab_paths, int len, int nb_ants)
 	{
 		path = tab_paths[y];
 		i = 0;
-		ft_printf("---- PATH %d of %d -----\n\n", y, len); 
+		ft_printf("---- PATH %d of %d -----\n\n", y + 1, len); 
 		ft_printf("(Len of this path : %d)\n", path->len);
 		ft_printf("Ants going through : %d\n", path->nb_ants);
 		while (path)
