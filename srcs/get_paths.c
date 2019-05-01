@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 12:13:49 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/30 18:58:45 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/01 17:13:50 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ t_path	*get_path(t_graph *graph, int *parent_map)
 		node = introduced_by;
 		path = tmp;
 	}
-	//print_path(path);
 	return (path);
 }
 
@@ -96,7 +95,6 @@ void	ek_update_flux(t_graph *graph, t_path *path)
 		link_update->opposite->flow -= 1;
 		//ft_printf("parent [%s] to child [%s] flow = %d closed : %d\n", path->node->name, link_update->child->name, link_update->flow, link_update->closed);
 		//ft_printf("child [%s] to parent [%s] flow = %d closed : %d\n", link_update->child->name, path->node->name, link_update->opposite->flow, link_update->opposite->closed);
-		ft_printf("\n");
 		tmp = path;
 		path = path->next;
 		free(tmp);

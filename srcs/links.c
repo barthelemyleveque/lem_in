@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 18:46:51 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/29 15:14:40 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/01 17:12:58 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,10 @@ int		ft_link_link(char **tab, t_graph *graph)
 	l2 = NULL;
 	hash_0 = jenkins_hash(tab[0]);
 	hash_1 = jenkins_hash(tab[1]);
-	//printf("hash: %d\n", hash_0);
-	while (graph->tab[hash_0]->hash != hash_0)
+	while (ft_strcmp(tab[0], graph->tab[hash_0]->name))
 		hash_0 = hash_0 < PRIME ? hash_0 + 1 : 0;
-	while (graph->tab[hash_1]->hash != hash_1)
+	while (ft_strcmp(tab[1], graph->tab[hash_1]->name))
 		hash_1 = hash_1 < PRIME ? hash_1 + 1 : 0;
-	//ft_printf("hash 0 : %s hash 1 : %s\n", graph->tab[hash_0]->name, graph->tab[hash_1]->name);
 	if (!(ft_create_link(graph, graph->tab[hash_0], graph->tab[hash_1], &l1)))
 		return (M_FAIL);
 	if (!(ft_create_link(graph, graph->tab[hash_1], graph->tab[hash_0], &l2)))
@@ -113,10 +111,11 @@ void	ft_print_links(t_graph *graph, t_node *room)
 	t_link	*link;
 	int		i;
 
-	link = room ->links;
+	link = room->links;
 	i = 0;
 	ft_printf("%d ants will start from : '%s' [H:%d] | Dest : '%s' [H:%d] \n\n", 
 			graph->ants, graph->start->name, graph->start->hash, graph->end->name, graph->end->hash);
+	ft_printf("check hash : %d\n", jenkins_hash(room->name));
 	ft_printf("--- '%s' [H:%d] LINKS --- \n\n", room->name, room->hash);
 	while (link)
 	{

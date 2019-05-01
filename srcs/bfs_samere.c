@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/30 14:00:07 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/01 17:12:19 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ int		init_bfs(t_graph *graph)
 		edmond = update_edmond(graph, edmond, iter);
 		check_multiple_rooms(graph, edmond, visited_tab);
 		reinit_tabs(visited_tab, graph->nb_nodes, parent_map, PRIME, graph);
-		ft_printf("\n\n");
 	}
 	find_best_path(graph, edmond);
 	return (1);
