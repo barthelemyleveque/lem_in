@@ -6,7 +6,7 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 13:06:21 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/01 14:57:23 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/01 18:08:19 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,24 +60,32 @@ int		number_of_steps(t_path **tab_paths, int nb_chemins, int ants)
 ** en fonction du nombre de fourmis. Et return la combinaison la plus rapide.
 */
 
-void	find_best_path(t_graph *graph, t_edmond *edmond)
+void		find_best_path(t_graph *graph, t_edmond *edmond)
 {
-	int		steps;
-	int		ants;
-	int 	tmp_steps;
-	int		edmond_nb;
+	int			steps;
+	int			ants;
+	int 		tmp_steps;
+	int			edmond_nb;
+	int			i;
+	t_edmond	*tmp;
 
 	ants = graph->ants;
+	tmp = edmond;
 	tmp_steps = INT_MAX;
-	while (edmond)
+	while (tmp)
 	{
-		steps = number_of_steps(edmond->tab_paths, edmond->nb_chemin, ants);
-		//print_tab_paths(edmond->tab_paths, edmond->nb_chemin, ants);
+		steps = number_of_steps(tmp->tab_paths, tmp->nb_chemin, ants);
 		if (steps < tmp_steps)
 		{
-			edmond_nb = edmond->nb_chemin;
+			edmond_nb = tmp->nb_chemin;
 			tmp_steps = steps;
 		}
-		edmond = edmond->next;
+		tmp = tmp->next;
 	}
+	tmp = edmond;
+	i = -1;
+	while (tmp->nb_chemin != edmond_nb)
+		tmp = tmp->next;
+	ft_printf("\n\n>>> %d fourmis parcoureront %d chemins en %d steps <<<\n\n",ants, edmond_nb, tmp_steps);
+	print_tab_paths(tmp->tab_paths, edmond_nb, graph->ants);
 }

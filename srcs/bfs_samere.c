@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/01 17:12:19 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/01 18:04:18 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int		init_bfs(t_graph *graph)
 	while (bfs_launcher(graph, visited_tab, parent_map) != -1)
 	{
 		iter++;
-		ft_printf("\n -------------  NEW BFS A %d CHEMINS -----------\n", iter);
+		//ft_printf("\n -------------  NEW BFS A %d CHEMINS -----------\n", iter);
 		path = get_path(graph, parent_map);
 		ek_update_flux(graph, path);
 		reinit_tabs(visited_tab, graph->nb_nodes, parent_map, PRIME, graph);
