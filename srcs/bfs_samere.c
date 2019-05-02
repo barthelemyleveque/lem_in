@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/01 18:04:18 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/02 11:06:14 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,21 +113,22 @@ int		init_bfs(t_graph *graph)
 	if (!(parent_map = (int*)malloc(sizeof(int) * PRIME)))
 		return (0);
 	i = -1;
-	while (++i <= graph->nb_nodes)
+	while (++i < graph->nb_nodes)
 		visited_tab[i] = -1;
 	iter = 0;
 	while (bfs_launcher(graph, visited_tab, parent_map) != -1)
 	{
 		iter++;
-		//ft_printf("\n -------------  NEW BFS A %d CHEMINS -----------\n", iter);
 		path = get_path(graph, parent_map);
 		ek_update_flux(graph, path);
 		reinit_tabs(visited_tab, graph->nb_nodes, parent_map, PRIME, graph);
 		edmond = update_edmond(graph, edmond, iter);
-		check_multiple_rooms(graph, edmond, visited_tab);
+		check_multiple_rooms(graph, edmond, visited_tab); // a enlever
 		reinit_tabs(visited_tab, graph->nb_nodes, parent_map, PRIME, graph);
 	}
-	find_best_path(graph, edmond);
+	// FREE VISITED TAB & PARENT MAP
+	ants_in_my_pants(graph, edmond);
+	// FREE EDMOND ET GRAPH
 	return (1);
 }
 
@@ -142,7 +143,7 @@ void	reinit_tabs(int *visited_tab, int len_tab, int *map, int len_map, t_graph
 	t_node	*node;
 
 	i = -1;
-	while (++i <= len_tab)
+	while (++i < len_tab)
 	{
 		if (visited_tab[i] != -1)
 		{
