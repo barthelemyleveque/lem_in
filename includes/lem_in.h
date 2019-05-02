@@ -6,7 +6,7 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:41:28 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/02 10:14:50 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/02 20:38:34 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct		s_link
 typedef struct		s_node
 {
 	int				hash;
+	int				curr_ant;
 	int				visited;
 	int				x_coord;
 	int				y_coord;
@@ -109,9 +110,8 @@ void		print_path(t_path *path);
 void		check_multiple_rooms(t_graph *graph, t_edmond *edmond, int *visited_tab);
 void		ants_in_my_pants(t_graph *graph, t_edmond *edmond);
 void		print_tab_paths(t_path **tab_paths, int len, int nb_ants);
-
+void		ft_push_ants(t_graph *g, t_edmond *res, int ant);
 /*  PARSING TOOLS  */
-
 int			ft_tablen(char **tab);
 void		ft_free_tab(char **tab);
 

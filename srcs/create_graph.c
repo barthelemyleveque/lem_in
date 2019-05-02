@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:01:50 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/01 17:11:49 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/02 20:46:17 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int		ft_fill_node(t_graph *graph, char **tab, t_node *node, int spec)
 	else if (spec == 2)
 		graph->end = node;
 	node->links = NULL;
+	node->curr_ant = -1;
 	//ft_printf("name : %s\n", node->name);
 	node->hash = jenkins_hash(node->name);
 	//ft_printf("hash %d\n", node->hash);

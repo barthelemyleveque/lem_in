@@ -6,7 +6,7 @@
 #    By: bleveque <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/11 10:15:06 by bleveque          #+#    #+#              #
-#    Updated: 2019/04/30 14:03:46 by bleveque         ###   ########.fr        #
+#    Updated: 2019/05/02 20:40:43 by andrewrze        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ SRCS_PATH = srcs/
 OBJS_PATH = objs/
 LIB_PATH = libft/
 
-SRC_NAME_1 = ft_parsing_tools.c \
+SRC_NAME_1 = push_ants.c \
+			 ft_parsing_tools.c \
 			 create_graph.c \
 			 links.c \
 			 bfs_samere.c \
