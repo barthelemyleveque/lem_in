@@ -6,7 +6,7 @@
 /*   By: andrewrzepecki <anrzepec@student.42.f      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 19:41:15 by andrewrze         #+#    #+#             */
-/*   Updated: 2019/05/02 20:48:28 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/02 21:26:48 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ void		ft_push_paths(t_path *path)
 	{
 		if (tracer->node->curr_ant != -1 || !first)
 		{
-			if (tracer->node->curr_ant != -1)
-				ft_printf("L%d-%s ", tracer->node->curr_ant, tracer->node->name);
 			c_tmp = tracer->node->curr_ant;
 			tracer->node->curr_ant = tmp;
 			tmp = c_tmp;
 			first = 0;
+			if (tracer->node->curr_ant != -1)
+				ft_printf("L%d-%s ", tracer->node->curr_ant, tracer->node->name);
 		}
 		tracer = tracer->next;
 	}
