@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:01:50 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/02 20:46:17 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/03 23:39:14 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,19 @@ int		get_ants(t_graph *graph, int fd)
 {
 	char	*line;
 
-	get_next_line(fd, &line);
-	if (!ft_strnum(line))
+	line = NULL;
+	if (get_next_line(fd, &line) < 1)
+	{
+		ft_strdel(&line);
 		return (A_FAIL);
-	graph->ants = ft_atoi(line);
-	free(line);
-	if (graph->ants <= 0)
+	}
+	if (!ft_number_arg(line))
+	{
+		ft_strdel(&line);
 		return (A_FAIL);
+	}
+	graph->ants = (int)ft_atoll(line);
+	ft_strdel(&line);
 	return (1);
 }
 
@@ -48,25 +54,13 @@ int		jenkins_hash(char *name)
 
 int		ft_fill_node(t_graph *graph, char **tab, t_node *node, int spec)
 {
-	if (!ft_strnum(tab[1]) || !ft_strnum(tab[2]))
-	{
-		ft_free_tab(tab);
-		return (0);
-	}
-	node->name = ft_strdup(tab[0]);
-	node->x_coord = ft_atoi(tab[1]);
-	node->y_coord = ft_atoi(tab[2]);
-	node->visited = 0;
-	node->special = spec;
-	if (spec == 1)
-		graph->start = node;
-	else if (spec == 2)
-		graph->end = node;
+	int		ret;
+
+	if ((ret = parse_node(graph, tab, node, spec)) < 1)
+		return (ret);
 	node->links = NULL;
 	node->curr_ant = -1;
-	//ft_printf("name : %s\n", node->name);
-	node->hash = jenkins_hash(node->name);
-	//ft_printf("hash %d\n", node->hash);
+	node->hash = jenkins_hash(tab[0]);
 	while (graph->tab[node->hash])
 		node->hash = node->hash < PRIME ? (node->hash + 1) : 0;
 	graph->tab[node->hash] = node;
@@ -80,59 +74,52 @@ int		ft_create_node(t_graph *graph, char *line, int spec, int fd)
 {
 	t_node	*node;
 	char	**tab;
+	int		ret;
 
 	if (!(tab = ft_strsplit(line, ' ')) || !(node = malloc(sizeof(t_node))))
-	{
-		ft_strdel(&line);
 		return (M_FAIL);
+	if ((ret = ft_tablen(tab)) == 1 || (ret = ft_tablen(tab)) != 3)
+	{
+		free(node);
+		ft_free_tab(tab);
+		return (ret);
 	}
-	if (ft_tablen(tab) == 1)
+	if (ft_fill_node(graph, tab, node, spec) < 1)
 	{
 		ft_free_tab(tab);
-		return (0);
-	}
-	if (ft_tablen(tab) != 3)
-	{
-		ft_strdel(&line);
-		ft_free_tab(tab);
+		free(node);
 		return (N_FAIL);
 	}
-	if (!ft_fill_node(graph, tab, node, spec))
-		return (N_FAIL);
 	ft_free_tab(tab);
-	return (1);
+	return (0);
 }
 
 int		get_nodes(t_graph *graph, int fd)
 {
 	char	*line;
 	int		spec;
-	int 	links;
 	int		ret;
 
 	ret = 1;
 	spec = 0;
 	while (get_next_line(fd, &line))
 	{
-		if (!(ft_strcmp(line, "##start")))
-			spec = 1;
-		else if (!(ft_strcmp(line, "##end")))
-			spec = 2;
-		else if (line[0] != '#')
+		if (line && line[0] == '#')
+			spec  = ft_parse_comment(line);
+		else if (line)
 		{
-			if ((ret = ft_create_node(graph, line, spec, fd)) < 0)
-				return (ret);
-			spec = 0;
+			if ((ret = ft_create_node(graph, line, spec, fd)) == 1)
+				return (ft_first_link(graph, &line));
+			else if (!ret)
+				spec = ret;
+			else
+			{
+				ft_strdel(&line);
+				return ((ret = (ret > 1) ? NODE_PERROR : ret));
+			}
 		}
-		if (!(ret))
-		{
-			if ((ret = ft_first_link(graph, line)) > 0)
-				ret = ft_links(graph, fd);
-			return (ret);
-		}
-		free(line);
-		if (ret < 1)
-			return (ret);
+		ft_strdel(&line);
+		line = NULL;
 	}
 	return (1);
 }
@@ -140,20 +127,19 @@ int		get_nodes(t_graph *graph, int fd)
 int		init_graph(char **av, t_graph *graph)
 {
 	int		i;
-	int		fd;
 	int		ret;
 
-	i = -1;
 	if (!(graph->tab = (t_node**)malloc(sizeof(t_node*) * PRIME)))
 		return (M_FAIL);
+	i = -1;
 	while (++i < PRIME)
 		graph->tab[i] = NULL;
 	graph->nb_nodes = 0;
-	if (!(fd = open(av[1], O_RDONLY)))
-		return (O_FAIL);
-	if ((ret = get_ants(graph, fd)) < 1)
+	graph->start = NULL;
+	graph->end = NULL;
+	if ((ret = get_ants(graph, 0)) < 1)
 		return (ret);
-	if ((ret = get_nodes(graph, fd)) < 1)
+	if ((ret = get_nodes(graph, 0)) < 1)
 		return (ret);
 	return (1);
 }
@@ -164,8 +150,6 @@ int		main(int ac, char **av)
 	int			ret;
 	t_graph		graph;
 
-	if (ac != 2)
-		return (0);
 	if ((ret = init_graph(av, &graph)) < 1)
 		return (ret);
 	init_bfs(&graph);

@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 18:46:51 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/02 10:56:46 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/03 23:43:58 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@
 ** flow pour les liens vers start = -2 pour eviter de revenir a la source ?
 */
 
-void	ft_get_opposite(t_link *l1, t_link *l2)
-{
-	l1->opposite = l2;
-	l2->opposite = l1;
-}
 int		ft_create_link(t_graph *graph, t_node *parent, t_node *enfant, t_link **opp)
 {
 	t_link	*link;
@@ -65,42 +60,47 @@ int		ft_link_link(char **tab, t_graph *graph)
 		hash_0 = hash_0 < PRIME ? hash_0 + 1 : 0;
 	while (ft_strcmp(tab[1], graph->tab[hash_1]->name))
 		hash_1 = hash_1 < PRIME ? hash_1 + 1 : 0;
-	if (!(ft_create_link(graph, graph->tab[hash_0], graph->tab[hash_1], &l1)))
+	if (ft_create_link(graph, graph->tab[hash_0], graph->tab[hash_1], &l1) < 1)
 		return (M_FAIL);
-	if (!(ft_create_link(graph, graph->tab[hash_1], graph->tab[hash_0], &l2)))
+	if (ft_create_link(graph, graph->tab[hash_1], graph->tab[hash_0], &l2) < 1)
 		return (M_FAIL);
-	ft_get_opposite(l1, l2);
+	l1->opposite = l2;
+	l2->opposite = l1;
 	return (1);
 }
 
-int		ft_first_link(t_graph *graph, char *line)
+int		ft_first_link(t_graph *graph, char **line)
 {
 	char	**tab;
 	int		i;
 
-	if (!(tab = ft_strsplit(line, '-')))
+	if (!(tab = ft_strsplit(*line, '-')))
 		return (M_FAIL);
 	if ((ft_link_link(tab, graph)) < 1)
 		return (M_FAIL);
 	ft_free_tab(tab);
-	free(line);
-	return (1);
+	ft_strdel(&(*line));
+	return (ft_links(graph, 0));
 }
 
 int		ft_links(t_graph *graph, int fd)
 {
 	char	**tab;
 	char	*line;
+	int		ret;
 
-	while (get_next_line(fd, &line))
+	ret = 1;
+	while (get_next_line(fd, &line) > 0)
 	{
 		if (!(tab = ft_strsplit(line, '-')))
 			return (M_FAIL);
-		if (tab[0][0] != '#')
-			if (!(ft_link_link(tab, graph)))
-				return (M_FAIL);
+		if (ft_tablen(tab) > 0 && tab[0][0] != '#'
+				&& parse_link(graph, tab))
+				ret = ft_link_link(tab, graph);
 		ft_free_tab(tab);
-		free(line);
+		ft_strdel(&line);
+		if (ret < 1)
+			return (ret);
 	}
 	ft_print_links(graph, graph->start);
 	return (1);

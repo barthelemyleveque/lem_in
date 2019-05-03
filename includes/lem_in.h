@@ -6,7 +6,7 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:41:28 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/02 20:38:34 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/03 23:37:03 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,15 @@
 # define PRIME 9931
 
 /* ERROR RETURNS */
-
-# define M_FAIL -1
-# define O_FAIL -2
-# define A_FAIL -3
-# define N_FAIL -4
+# define _MIN_INT_		-2147483648
+# define _MAX_INT_		2147483647
+# define M_FAIL 		-1
+# define O_FAIL			-2
+# define A_FAIL			-3
+# define N_FAIL			-4
+# define NODE_PERROR	-5
+# define END_ERROR		-6
+# define START_ERROR	-7
 /*
 ** Structures pour construire le graph :
 ** t_link = liste des child_nodes d'une salle, et leur flow 
@@ -92,7 +96,7 @@ typedef struct		s_edmond
 	struct s_edmond	*next;
 }					t_edmond;
 
-int			ft_first_link(t_graph *graph, char *line);
+int			ft_first_link(t_graph *graph, char **line);
 int			ft_links(t_graph *graph, int fd);
 int			jenkins_hash(char *name);
 void		ft_print_links(t_graph *graph, t_node *room);
@@ -111,7 +115,12 @@ void		check_multiple_rooms(t_graph *graph, t_edmond *edmond, int *visited_tab);
 void		ants_in_my_pants(t_graph *graph, t_edmond *edmond);
 void		print_tab_paths(t_path **tab_paths, int len, int nb_ants);
 void		ft_push_ants(t_graph *g, t_edmond *res, int ant);
+
 /*  PARSING TOOLS  */
+int			parse_link(t_graph *g, char **tab);
+int			parse_node(t_graph *g, char **tab, t_node *node, int spec);
+int			ft_parse_comment(char *s);
+int			ft_number_arg(char *s);
 int			ft_tablen(char **tab);
 void		ft_free_tab(char **tab);
 
