@@ -6,27 +6,18 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:01:50 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/03 23:39:14 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/04 13:29:50 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		get_ants(t_graph *graph, int fd)
+int		get_ants(t_graph *graph, int fd, char *line)
 {
-	char	*line;
-
-	line = NULL;
 	if (get_next_line(fd, &line) < 1)
-	{
-		ft_strdel(&line);
 		return (A_FAIL);
-	}
 	if (!ft_number_arg(line))
-	{
-		ft_strdel(&line);
 		return (A_FAIL);
-	}
 	graph->ants = (int)ft_atoll(line);
 	ft_strdel(&line);
 	return (1);
@@ -94,32 +85,28 @@ int		ft_create_node(t_graph *graph, char *line, int spec, int fd)
 	return (0);
 }
 
-int		get_nodes(t_graph *graph, int fd)
+int		get_nodes(t_graph *graph, int fd, char **line)
 {
-	char	*line;
 	int		spec;
 	int		ret;
 
 	ret = 1;
 	spec = 0;
-	while (get_next_line(fd, &line))
+	while (get_next_line(fd, &(*line)))
 	{
-		if (line && line[0] == '#')
-			spec  = ft_parse_comment(line);
-		else if (line)
+		if (*line && (*line)[0] == '#')
+			spec  = ft_parse_comment(*line);
+		else if (*line)
 		{
-			if ((ret = ft_create_node(graph, line, spec, fd)) == 1)
-				return (ft_first_link(graph, &line));
+			if ((ret = ft_create_node(graph, *line, spec, fd)) == 1)
+				return (ft_first_link(graph, line));
 			else if (!ret)
 				spec = ret;
 			else
-			{
-				ft_strdel(&line);
 				return ((ret = (ret > 1) ? NODE_PERROR : ret));
-			}
 		}
-		ft_strdel(&line);
-		line = NULL;
+		ft_strdel(&(*line));
+		*line = NULL;
 	}
 	return (1);
 }
@@ -128,6 +115,7 @@ int		init_graph(char **av, t_graph *graph)
 {
 	int		i;
 	int		ret;
+	char	*line;
 
 	if (!(graph->tab = (t_node**)malloc(sizeof(t_node*) * PRIME)))
 		return (M_FAIL);
@@ -137,13 +125,36 @@ int		init_graph(char **av, t_graph *graph)
 	graph->nb_nodes = 0;
 	graph->start = NULL;
 	graph->end = NULL;
-	if ((ret = get_ants(graph, 0)) < 1)
+	if ((ret = get_ants(graph, 0, line)) < 1)
+	{
+		ft_strdel(&line);
 		return (ret);
-	if ((ret = get_nodes(graph, 0)) < 1)
+	}
+	if ((ret = get_nodes(graph, 0, &line)) < 1)
+	{
+		ft_strdel(&line);
 		return (ret);
+	}
 	return (1);
 }
 
+int		valid_graph(t_graph *g)
+{
+	int	*map;
+
+	if (!g->start || !g->end)
+		return (0);
+	if (!(map = (int*)malloc(sizeof(int) * PRIME)))
+		return (0);
+	reinit_tabs(map, PRIME);
+	if (bfs_launcher(g, map) == 1)
+	{
+		free(map);
+		return (1);
+	}
+	free(map);
+	return (0);
+}
 
 int		main(int ac, char **av)
 {
@@ -152,6 +163,9 @@ int		main(int ac, char **av)
 
 	if ((ret = init_graph(av, &graph)) < 1)
 		return (ret);
-	init_bfs(&graph);
+	if (valid_graph(&graph))
+		init_bfs(&graph);
+	else
+		ft_putendl("INVALID GRAPH");
 	return (0);
 }

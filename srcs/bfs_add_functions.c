@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 18:12:01 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/29 17:07:00 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/04 13:21:17 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	add_to_visited(t_link *link, int *tab)
 	while (tab[i] != -1)
 		i++;
 	tab[i] = link->child->hash;
-	//ft_printf("Visited |nb %d |  %d\n", i, tab[i]);
 }
 
 int		add_to_queue(t_link *link, t_queue *queue)
@@ -35,14 +34,13 @@ int		add_to_queue(t_link *link, t_queue *queue)
 		return (1);
 	}
 	if (!(add = (t_queue*)malloc(sizeof(t_queue))))
-		return (0);
+		return (M_FAIL);
 	add->node = link->child;
 	add->next = NULL;
 	tmp = queue;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = add;
-	//ft_printf("QUEUE | added to queue : %d\n", tmp->next->node->hash); 
 	return (1);
 }
 

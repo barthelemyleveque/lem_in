@@ -6,7 +6,7 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:41:28 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/03 23:37:03 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/04 13:30:54 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,11 @@ typedef struct		s_edmond
 }					t_edmond;
 
 int			ft_first_link(t_graph *graph, char **line);
-int			ft_links(t_graph *graph, int fd);
+int			ft_links(t_graph *graph, int fd, char **line);
 int			jenkins_hash(char *name);
 void		ft_print_links(t_graph *graph, t_node *room);
 int			init_bfs(t_graph *graph);
+int			bfs_launcher(t_graph *graph, int *parent_map);
 void		add_to_visited(t_link *link, int *tab);
 int			add_to_queue(t_link *link, t_queue *queue);
 void		add_to_parent_map(t_node *pos, t_link *link, int *map);
@@ -108,7 +109,7 @@ int 		is_visited(t_link *link, int *tab, t_node *node);
 t_queue		*init_queue();
 t_path		*get_path(t_graph *graph, int *parent_map);
 void		ek_update_flux(t_graph *graph, t_path *path);
-void		reinit_tabs(int *visited_tab, int len_tab, int *map, int len_map, t_graph						*graph);
+void		reinit_tabs(int *map, int len_map);
 t_edmond	*update_edmond(t_graph *graph, t_edmond *old_eddy, int boucle);
 void		print_path(t_path *path);
 void		check_multiple_rooms(t_graph *graph, t_edmond *edmond, int *visited_tab);

@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/02 11:06:14 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/04 13:26:29 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,20 @@ void	print_queue(t_queue *queue)
 ** Condition d'arret du link child fait bugguer le truc dieu sait pourquoi
 */ 
 
-int		update_all(t_node *pos, int *map, t_queue *queue, int *v_tab, t_graph 
+int		update_all(int *map, t_queue *queue, int *v_tab, t_graph 
 		*graph)
 {
 	t_link	*tmp_l;
 
-	tmp_l = pos->links;
+	tmp_l = queue->node->links;
 	while (tmp_l)
 	{
-		if (!(is_visited(tmp_l, v_tab, pos)))
+		if (!(is_visited(tmp_l, v_tab, queue->node)))
 		{
-			if (!(add_to_queue(tmp_l, queue)))
-				return (0);
+			if (add_to_queue(tmp_l, queue) < 1)
+				return (M_FAIL);
 			add_to_visited(tmp_l, v_tab);
-			add_to_parent_map(pos, tmp_l, map);
+			add_to_parent_map(queue->node, tmp_l, map);
 		}
 		tmp_l = tmp_l->next;
 	}
@@ -60,37 +60,45 @@ int		update_all(t_node *pos, int *map, t_queue *queue, int *v_tab, t_graph
 ** 
 */ 
 
-int		bfs_launcher(t_graph *graph, int *visited_tab, int *parent_map)
- {
+int		queue_free(t_queue *queue, int **visited)
+{
+	t_queue *tmp;
+
+	while (queue)
+	{
+		tmp = queue;
+		queue = queue->next;
+		free(tmp);
+	}
+	free(*visited);
+	return (M_FAIL);
+}
+
+int		bfs_launcher(t_graph *graph, int *parent_map)
+{
+	int			*visited;
 	t_queue		*queue;
 	t_queue		*tmp;
-	t_node		*pos;
-	int			ret;
+	int			i;
 
-	pos = graph->start;
-	visited_tab[0] = pos->hash;
-	queue = init_queue();
-	ret = 0;
-	while (pos != graph->end)
+	if (!(visited = (int*)malloc(sizeof(int) * graph->nb_nodes)))
+		return (M_FAIL);
+	i = -1;
+	while (++i < graph->nb_nodes)
+		visited[i] = -1;
+	visited[0] = graph->start->hash;
+	queue = init_queue(graph);
+	while (queue && queue->node != graph->end)
 	{
-		if (update_all(pos, parent_map, queue, visited_tab, graph) == 2)
-		{
-			// FAIRE UNE FONCTION FREE QUEUE
-			break;
-		}
-		if (ret >= 2 || !(queue->node))
-			return (-1);
-		ret = (pos->name == queue->node->name) ? ret + 1 : 0;
+		if (update_all(parent_map, queue, visited, graph) < 1)
+			return (queue_free(queue, &visited));
 		tmp = queue;
-		pos = tmp->node;
-		if (queue->next)
-		{
-			queue = queue->next;
-			free(tmp);
-		}
+		queue = queue->next;
+		free(tmp);
 	}
-	free(queue);
-	return (1);
+	i = queue ? 1 : 0;
+	queue_free(queue, &visited);
+	return (i);
 }
 
 /*
@@ -101,34 +109,24 @@ int		bfs_launcher(t_graph *graph, int *visited_tab, int *parent_map)
 
 int		init_bfs(t_graph *graph)
 {
-	int			*visited_tab;
 	int			*parent_map;
 	t_edmond	*edmond;
 	t_path		*path;
 	int			iter;
-	int 		i;
 
-	if (!(visited_tab = (int*)malloc(sizeof(int) * graph->nb_nodes)))
-		return (0);
 	if (!(parent_map = (int*)malloc(sizeof(int) * PRIME)))
 		return (0);
-	i = -1;
-	while (++i < graph->nb_nodes)
-		visited_tab[i] = -1;
+	reinit_tabs(parent_map, PRIME);
 	iter = 0;
-	while (bfs_launcher(graph, visited_tab, parent_map) != -1)
+	while (bfs_launcher(graph, parent_map))
 	{
 		iter++;
 		path = get_path(graph, parent_map);
 		ek_update_flux(graph, path);
-		reinit_tabs(visited_tab, graph->nb_nodes, parent_map, PRIME, graph);
+		reinit_tabs(parent_map, PRIME);
 		edmond = update_edmond(graph, edmond, iter);
-		check_multiple_rooms(graph, edmond, visited_tab); // a enlever
-		reinit_tabs(visited_tab, graph->nb_nodes, parent_map, PRIME, graph);
 	}
-	// FREE VISITED TAB & PARENT MAP
 	ants_in_my_pants(graph, edmond);
-	// FREE EDMOND ET GRAPH
 	return (1);
 }
 
@@ -136,22 +134,10 @@ int		init_bfs(t_graph *graph)
 ** remise a zero des tableaux et des visited
 */ 
 
-void	reinit_tabs(int *visited_tab, int len_tab, int *map, int len_map, t_graph
-					*graph)
+void	reinit_tabs(int *map, int len_map)
 {
 	int		i;
-	t_node	*node;
 
-	i = -1;
-	while (++i < len_tab)
-	{
-		if (visited_tab[i] != -1)
-		{
-			node = graph->tab[visited_tab[i]];
-			node->visited = 0;
-		}
-		visited_tab[i] = -1;
-	}
 	i = -1;
 	while (++i < len_map)
 		map[i] = -1;
@@ -161,13 +147,13 @@ void	reinit_tabs(int *visited_tab, int len_tab, int *map, int len_map, t_graph
 ** Initialisation des structures 
 */
 
-t_queue		*init_queue()
+t_queue		*init_queue(t_graph *g)
 {
 	t_queue	*queue;
 
 	if (!(queue = (t_queue*)malloc(sizeof(t_queue))))
 		return (NULL);
-	queue->node = NULL;
+	queue->node = g->start;
 	queue->next = NULL;
 	return (queue);
 }

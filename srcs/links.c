@@ -6,15 +6,15 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 18:46:51 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/03 23:43:58 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/04 13:32:56 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
-** flow pour les liens vers start = -2 pour eviter de revenir a la source ?
-*/
+ ** flow pour les liens vers start = -2 pour eviter de revenir a la source ?
+ */
 
 int		ft_create_link(t_graph *graph, t_node *parent, t_node *enfant, t_link **opp)
 {
@@ -41,9 +41,9 @@ int		ft_create_link(t_graph *graph, t_node *parent, t_node *enfant, t_link **opp
 }
 
 /*
-** Verifier qu'on ne tombe pas sur une collision grace a la valeur de hash dans
-** le noeud (cf : fonction ft_fill_node)
-*/ 
+ ** Verifier qu'on ne tombe pas sur une collision grace a la valeur de hash dans
+ ** le noeud (cf : fonction ft_fill_node)
+ */ 
 
 int		ft_link_link(char **tab, t_graph *graph)
 {
@@ -72,37 +72,42 @@ int		ft_link_link(char **tab, t_graph *graph)
 int		ft_first_link(t_graph *graph, char **line)
 {
 	char	**tab;
-	int		i;
-
-	if (!(tab = ft_strsplit(*line, '-')))
-		return (M_FAIL);
-	if ((ft_link_link(tab, graph)) < 1)
-		return (M_FAIL);
-	ft_free_tab(tab);
-	ft_strdel(&(*line));
-	return (ft_links(graph, 0));
-}
-
-int		ft_links(t_graph *graph, int fd)
-{
-	char	**tab;
-	char	*line;
 	int		ret;
 
 	ret = 1;
-	while (get_next_line(fd, &line) > 0)
+	if (!(tab = ft_strsplit(*line, '-')))
+		return (M_FAIL);
+	if (ft_tablen(tab) > 0 && tab[0][0] != '#'
+			&& parse_link(graph, tab))
+		ret = ft_link_link(tab, graph);
+	ft_free_tab(tab);
+	if (ret < 1)
+		return (ret);
+	ft_strdel(&(*line));
+	*line = NULL;
+	return (ft_links(graph, 0, line));
+}
+
+int		ft_links(t_graph *graph, int fd, char **line)
+{
+	char	**tab;
+	int		ret;
+
+	ret = 1;
+	while (get_next_line(fd, &(*line)) > 0)
 	{
-		if (!(tab = ft_strsplit(line, '-')))
+		if (!(tab = ft_strsplit(*line, '-')))
 			return (M_FAIL);
 		if (ft_tablen(tab) > 0 && tab[0][0] != '#'
 				&& parse_link(graph, tab))
-				ret = ft_link_link(tab, graph);
+			ret = ft_link_link(tab, graph);
 		ft_free_tab(tab);
-		ft_strdel(&line);
 		if (ret < 1)
 			return (ret);
+		ft_strdel(&(*line));
+		*line = NULL;
 	}
-	ft_print_links(graph, graph->start);
+	//ft_print_links(graph, graph->start);
 	return (1);
 }
 
