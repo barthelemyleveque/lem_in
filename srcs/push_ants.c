@@ -6,7 +6,7 @@
 /*   By: andrewrzepecki <anrzepec@student.42.f      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 19:41:15 by andrewrze         #+#    #+#             */
-/*   Updated: 2019/05/02 21:26:48 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/07 16:03:59 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int			ft_recuring_probe(t_edmond *e)
 	return (0);
 }
 
-int			ft_push_from_start(t_edmond *res, int ant)
+int			ft_push_from_start(t_edmond *res, int ant, int ret)
 {
 	int i;
 
@@ -42,14 +42,17 @@ int			ft_push_from_start(t_edmond *res, int ant)
 		{
 			res->tab_paths[i]->next->node->curr_ant = ant;
 			res->tab_paths[i]->nb_ants--;
-			printf("L%d-%s ", res->tab_paths[i]->next->node->curr_ant, res->tab_paths[i]->next->node->name);
+			ft_printf("L%d-%s ", res->tab_paths[i]->next->node->curr_ant, res->tab_paths[i]->next->node->name);
 			ant++;
+			ret = 1;
 		}
 	}
+	if (ret)
+		ft_putendl("");
 	return (ant);
 }
 
-void		ft_push_paths(t_path *path)
+void		ft_push_paths(t_path *path, int *ret)
 {
 	t_path	*tracer;
 	int		tmp;
@@ -68,7 +71,10 @@ void		ft_push_paths(t_path *path)
 			tmp = c_tmp;
 			first = 0;
 			if (tracer->node->curr_ant != -1)
+			{
 				ft_printf("L%d-%s ", tracer->node->curr_ant, tracer->node->name);
+				*ret = 1;
+			}
 		}
 		tracer = tracer->next;
 	}
@@ -77,12 +83,13 @@ void		ft_push_paths(t_path *path)
 void		ft_push_ants(t_graph *g, t_edmond *res, int ant)
 {
 	int i;
+	int	ret;
 
 	i = -1;
+	ret = 0;
 	while (++i < res->nb_chemin)
-		ft_push_paths(res->tab_paths[i]);
-	ant = ft_push_from_start(res, ant);
-	printf("\n");
+		ft_push_paths(res->tab_paths[i], &ret);
+	ant = ft_push_from_start(res, ant, ret);
 	if (ft_recuring_probe(res))
 		ft_push_ants(g, res, ant);
 }

@@ -6,7 +6,7 @@
 /*   By: anrzepec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 13:43:02 by anrzepec          #+#    #+#             */
-/*   Updated: 2019/05/03 22:58:07 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/07 15:49:48 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int			parse_node(t_graph *g, char **tab, t_node *node, int spec)
 
 int			ft_parse_comment(char *s)
 {
+	ft_putendl(s);
 	if (!(ft_strcmp(s, "##start")))
 		return (1);
 	if (!(ft_strcmp(s, "##end")))

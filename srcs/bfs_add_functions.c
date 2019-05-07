@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 18:12:01 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/04 13:21:17 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/07 15:53:20 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int		add_to_queue(t_link *link, t_queue *queue)
 	if (!(queue->node))
 	{
 		queue->node = link->child;
-		ft_printf("QUEUE | added to queue : %d\n", link->child->hash); 
+	//	ft_printf("QUEUE | added to queue : %d\n", link->child->hash); 
 		return (1);
 	}
 	if (!(add = (t_queue*)malloc(sizeof(t_queue))))

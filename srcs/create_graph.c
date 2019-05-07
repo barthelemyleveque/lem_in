@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:01:50 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/04 13:29:50 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/07 15:54:49 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int		get_ants(t_graph *graph, int fd, char *line)
 	if (!ft_number_arg(line))
 		return (A_FAIL);
 	graph->ants = (int)ft_atoll(line);
+	ft_putendl(line);
 	ft_strdel(&line);
 	return (1);
 }
@@ -81,6 +82,7 @@ int		ft_create_node(t_graph *graph, char *line, int spec, int fd)
 		free(node);
 		return (N_FAIL);
 	}
+	ft_putendl(line);
 	ft_free_tab(tab);
 	return (0);
 }
@@ -164,7 +166,10 @@ int		main(int ac, char **av)
 	if ((ret = init_graph(av, &graph)) < 1)
 		return (ret);
 	if (valid_graph(&graph))
+	{
+		ft_putendl("");
 		init_bfs(&graph);
+	}
 	else
 		ft_putendl("INVALID GRAPH");
 	return (0);
