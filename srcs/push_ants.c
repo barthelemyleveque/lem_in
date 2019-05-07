@@ -6,7 +6,7 @@
 /*   By: andrewrzepecki <anrzepec@student.42.f      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/02 19:41:15 by andrewrze         #+#    #+#             */
-/*   Updated: 2019/05/07 16:03:59 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/07 16:28:56 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int			ft_recuring_probe(t_edmond *e)
 	return (0);
 }
 
-int			ft_push_from_start(t_edmond *res, int ant, int ret)
+int			ft_push_from_start(t_edmond *res, int ant, int ret, int space)
 {
 	int i;
 
@@ -42,9 +42,12 @@ int			ft_push_from_start(t_edmond *res, int ant, int ret)
 		{
 			res->tab_paths[i]->next->node->curr_ant = ant;
 			res->tab_paths[i]->nb_ants--;
-			ft_printf("L%d-%s ", res->tab_paths[i]->next->node->curr_ant, res->tab_paths[i]->next->node->name);
+			if (space)
+				ft_printf(" ");
+			ft_printf("L%d-%s", res->tab_paths[i]->next->node->curr_ant, res->tab_paths[i]->next->node->name);
 			ant++;
 			ret = 1;
+			space = 1;
 		}
 	}
 	if (ret)
@@ -52,7 +55,7 @@ int			ft_push_from_start(t_edmond *res, int ant, int ret)
 	return (ant);
 }
 
-void		ft_push_paths(t_path *path, int *ret)
+void		ft_push_paths(t_path *path, int *ret, int *space)
 {
 	t_path	*tracer;
 	int		tmp;
@@ -72,8 +75,11 @@ void		ft_push_paths(t_path *path, int *ret)
 			first = 0;
 			if (tracer->node->curr_ant != -1)
 			{
-				ft_printf("L%d-%s ", tracer->node->curr_ant, tracer->node->name);
+				if (*space)
+					ft_printf(" ");
+				ft_printf("L%d-%s", tracer->node->curr_ant, tracer->node->name);
 				*ret = 1;
+				*space = 1;
 			}
 		}
 		tracer = tracer->next;
@@ -84,12 +90,14 @@ void		ft_push_ants(t_graph *g, t_edmond *res, int ant)
 {
 	int i;
 	int	ret;
+	int	space;
 
 	i = -1;
 	ret = 0;
+	space = 0;
 	while (++i < res->nb_chemin)
-		ft_push_paths(res->tab_paths[i], &ret);
-	ant = ft_push_from_start(res, ant, ret);
+		ft_push_paths(res->tab_paths[i], &ret, &space);
+	ant = ft_push_from_start(res, ant, ret, space);
 	if (ft_recuring_probe(res))
 		ft_push_ants(g, res, ant);
 }
