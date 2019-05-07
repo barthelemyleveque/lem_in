@@ -6,12 +6,48 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 13:06:21 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/07 17:17:04 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/07 17:48:00 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include <limits.h>
+
+int		ft_max_steps(t_path **tab_paths, int nb_chemins)
+{
+	int	i;
+	int	path;
+	int	max_steps;
+	
+	i = -1;
+	max_steps = tab_paths[0]->len + tab_paths[0]->nb_ants;
+	while (++i < nb_chemins)
+	{
+		if (tab_paths[i]->len + tab_paths[i]->nb_ants > max_steps)
+			max_steps = tab_paths[i]->len + tab_paths[i]->nb_ants;
+	}
+	return (max_steps);
+}
+
+int		ft_min_steps(t_path **tab_paths, int nb_chemins)
+{
+	int	i;
+	int	path;
+	int	min_steps;
+	
+	i = -1;
+	min_steps = tab_paths[0]->len + tab_paths[0]->nb_ants;
+	path = 0;
+	while (++i < nb_chemins)
+	{
+		if (tab_paths[i]->len + tab_paths[i]->nb_ants < min_steps)
+		{
+			min_steps = tab_paths[i]->len + tab_paths[i]->nb_ants;
+			path = i;
+		}
+	}
+	return (path);
+}
 
 
 /*
@@ -21,10 +57,8 @@
 
 int		number_of_steps(t_path **tab_paths, int nb_chemins, int ants)
 {
-	int		nb_steps;
-	int		i;
+	int		min_steps;
 	
-	nb_steps = 0;
 	if (nb_chemins == 1)
 	{
 		tab_paths[0]->nb_ants = ants;
@@ -32,26 +66,12 @@ int		number_of_steps(t_path **tab_paths, int nb_chemins, int ants)
 	}
 	while (ants > 0)
 	{
-		i = -1;
-		while (++i < nb_chemins && ants > 0)
-		{
-			if (i == nb_chemins - 1 && tab_paths[i]->len + tab_paths[i]->nb_ants 
-				<= tab_paths[i - 1]->len + tab_paths[i - 1]->nb_ants)
-				{
-					ants--;
-					tab_paths[i]->nb_ants += 1;
-				}
-			else if (i != nb_chemins - 1 && 
-					tab_paths[i]->len + tab_paths[i]->nb_ants <= 
-					tab_paths[i + 1]->len + tab_paths[i + 1]->nb_ants)
-				{
-					ants--;
-					tab_paths[i]->nb_ants += 1;
-				}
-		}
+		min_steps = ft_min_steps(tab_paths, nb_chemins);
+		tab_paths[min_steps]->nb_ants += 1;
+		ants--;
 	}
-	return (tab_paths[0]->nb_ants + tab_paths[0]->len);
-}	
+	return (ft_max_steps(tab_paths, nb_chemins));
+}
 
 /*
 ** On va calculer le nombre de steps requis pour chaque combinaison de chemin
@@ -96,12 +116,9 @@ void	ants_in_my_pants(t_graph *graph, t_edmond *edmond)
 
 	best_edmond = find_best_path(graph, edmond);
 	steps = best_edmond->tab_paths[0]->len + best_edmond->tab_paths[0]->nb_ants;
-	//ft_printf("\n\n>>> %d fourmis parcoureront %d chemins en %d steps <<<\n\n",
-	//		graph->ants, best_edmond->nb_chemin, steps);
-	//print_tab_paths(best_edmond->tab_paths, best_edmond->nb_chemin, graph->ants);
-	// ON A LA MEILLEURE COMBINAISON DE FOURMIS MAINTENANT COMMENT SUIVRE LES
-	// FOURMIS AU FUR ET A MESURE QU'ELLES TRAVERSENT LE GRAPH ?
-	//check_multiple_rooms(graph, best_edmond);
+	/*ft_printf("\n\n>>> %d fourmis parcoureront %d chemins en %d steps <<<\n\n",
+			graph->ants, best_edmond->nb_chemin, steps);
+	print_tab_paths(best_edmond->tab_paths, best_edmond->nb_chemin, graph->ants);
+	check_multiple_rooms(graph, best_edmond);*/
 	ft_push_ants(graph, best_edmond, 0);	
-	// A CODER :print_results(best_edmond)
 }
