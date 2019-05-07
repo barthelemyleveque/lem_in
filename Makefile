@@ -6,13 +6,13 @@
 #    By: bleveque <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/11 10:15:06 by bleveque          #+#    #+#              #
-#    Updated: 2019/05/03 23:37:25 by andrewrze        ###   ########.fr        #
+#    Updated: 2019/05/07 16:12:41 by bleveque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all, libft, clean, fclean, re 
 
-NAME_1 = lem_in
+NAME_1 = lem-in
 
 INC_PATH = includes/
 SRCS_PATH = srcs/
