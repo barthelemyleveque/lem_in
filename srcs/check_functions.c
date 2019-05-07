@@ -6,18 +6,23 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 11:05:25 by bleveque          #+#    #+#             */
-/*   Updated: 2019/04/26 11:42:26 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/07 17:03:11 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void check_multiple_rooms(t_graph *graph, t_edmond *edmond, int *tab)
+void check_multiple_rooms(t_graph *graph, t_edmond *edmond)
 {
 	int		i;
 	int		j;
+	int		*tab;
 	t_path	*path;
 
+	i = -1;
+	tab = malloc(sizeof(int) * PRIME);
+	while (++i < PRIME)
+		tab[i] = -1;
 	i = -1;
 	while (++i < edmond->nb_chemin)
 	{
@@ -35,4 +40,5 @@ void check_multiple_rooms(t_graph *graph, t_edmond *edmond, int *tab)
 			path = path->next;
 		}
 	}
+	ft_printf("Check des multiple rooms done\n");
 }

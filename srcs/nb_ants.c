@@ -6,7 +6,7 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 13:06:21 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/07 15:53:53 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/07 17:17:04 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	ants_in_my_pants(t_graph *graph, t_edmond *edmond)
 	//print_tab_paths(best_edmond->tab_paths, best_edmond->nb_chemin, graph->ants);
 	// ON A LA MEILLEURE COMBINAISON DE FOURMIS MAINTENANT COMMENT SUIVRE LES
 	// FOURMIS AU FUR ET A MESURE QU'ELLES TRAVERSENT LE GRAPH ?
-		ft_push_ants(graph, best_edmond, 0);	
+	//check_multiple_rooms(graph, best_edmond);
+	ft_push_ants(graph, best_edmond, 0);	
 	// A CODER :print_results(best_edmond)
 }

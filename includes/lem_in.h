@@ -6,7 +6,7 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:41:28 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/04 13:30:54 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/07 16:57:48 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void		ek_update_flux(t_graph *graph, t_path *path);
 void		reinit_tabs(int *map, int len_map);
 t_edmond	*update_edmond(t_graph *graph, t_edmond *old_eddy, int boucle);
 void		print_path(t_path *path);
-void		check_multiple_rooms(t_graph *graph, t_edmond *edmond, int *visited_tab);
+void		check_multiple_rooms(t_graph *graph, t_edmond *edmond);
 void		ants_in_my_pants(t_graph *graph, t_edmond *edmond);
 void		print_tab_paths(t_path **tab_paths, int len, int nb_ants);
 void		ft_push_ants(t_graph *g, t_edmond *res, int ant);

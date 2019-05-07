@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/04 13:26:29 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/07 16:57:32 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,8 @@ int		init_bfs(t_graph *graph)
 		iter++;
 		path = get_path(graph, parent_map);
 		ek_update_flux(graph, path);
-		reinit_tabs(parent_map, PRIME);
 		edmond = update_edmond(graph, edmond, iter);
+		reinit_tabs(parent_map, PRIME);
 	}
 	ants_in_my_pants(graph, edmond);
 	return (1);
