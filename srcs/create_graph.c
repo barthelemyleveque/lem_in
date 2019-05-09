@@ -6,21 +6,23 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:01:50 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/07 15:54:49 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/09 17:10:57 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		get_ants(t_graph *graph, int fd, char *line)
+int		get_ants(t_graph *graph, int fd, char **line)
 {
-	if (get_next_line(fd, &line) < 1)
+	if (get_next_line(fd, &(*line)) < 1)
 		return (A_FAIL);
-	if (!ft_number_arg(line))
+	if (!ft_number_arg((*line)))
 		return (A_FAIL);
-	graph->ants = (int)ft_atoll(line);
-	ft_putendl(line);
-	ft_strdel(&line);
+	if ((graph->ants = (int)ft_atoll(*line)) < 1)
+		return (A_FAIL);
+	ft_putendl(*line);
+	ft_strdel(&(*line));
+	*line = NULL;
 	return (1);
 }
 
@@ -97,7 +99,7 @@ int		get_nodes(t_graph *graph, int fd, char **line)
 	while (get_next_line(fd, &(*line)))
 	{
 		if (*line && (*line)[0] == '#')
-			spec  = ft_parse_comment(*line);
+			spec = ft_parse_comment(*line);
 		else if (*line)
 		{
 			if ((ret = ft_create_node(graph, *line, spec, fd)) == 1)
@@ -119,6 +121,7 @@ int		init_graph(char **av, t_graph *graph)
 	int		ret;
 	char	*line;
 
+	line = NULL;
 	if (!(graph->tab = (t_node**)malloc(sizeof(t_node*) * PRIME)))
 		return (M_FAIL);
 	i = -1;
@@ -127,7 +130,7 @@ int		init_graph(char **av, t_graph *graph)
 	graph->nb_nodes = 0;
 	graph->start = NULL;
 	graph->end = NULL;
-	if ((ret = get_ants(graph, 0, line)) < 1)
+	if ((ret = get_ants(graph, 0, &line)) < 1)
 	{
 		ft_strdel(&line);
 		return (ret);

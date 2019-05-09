@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 18:46:51 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/07 15:50:29 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/09 15:52:59 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,14 @@ int		ft_first_link(t_graph *graph, char **line)
 	if (ft_tablen(tab) > 0 && tab[0][0] != '#'
 			&& parse_link(graph, tab))
 		ret = ft_link_link(tab, graph);
+	else
+		ret = 0;
 	ft_free_tab(tab);
-	if (ret < 1)
-		return (ret);
 	ft_putendl(*line);
 	ft_strdel(&(*line));
 	*line = NULL;
+	if (ret < 1)
+		return (ret);
 	return (ft_links(graph, 0, line));
 }
 
@@ -102,12 +104,14 @@ int		ft_links(t_graph *graph, int fd, char **line)
 		if (ft_tablen(tab) > 0 && tab[0][0] != '#'
 				&& parse_link(graph, tab))
 			ret = ft_link_link(tab, graph);
+		else
+			ret = 0;
 		ft_free_tab(tab);
-		if (ret < 1)
-			return (ret);
 		ft_putendl(*line);
 		ft_strdel(&(*line));
 		*line = NULL;
+		if (ret < 1)
+			return (ret);
 	}
 	//ft_print_links(graph, graph->start);
 	return (1);
