@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:01:50 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/09 17:10:57 by anrzepec         ###   ########.fr       */
+/*   Updated: 2019/05/09 17:17:04 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int		ft_create_node(t_graph *graph, char *line, int spec, int fd)
 	char	**tab;
 	int		ret;
 
+	if (ft_char_count(line, ' ') != 2)
+		return (N_FAIL);
 	if (!(tab = ft_strsplit(line, ' ')) || !(node = malloc(sizeof(t_node))))
 		return (M_FAIL);
 	if ((ret = ft_tablen(tab)) == 1 || (ret = ft_tablen(tab)) != 3)
