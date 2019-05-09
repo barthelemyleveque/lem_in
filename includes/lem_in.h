@@ -6,7 +6,7 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:41:28 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/09 20:20:11 by anrzepec         ###   ########.fr       */
+/*   Updated: 2019/05/10 01:18:28 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,18 @@
 # define PRIME 9931
 
 /* ERROR RETURNS */
-# define _MIN_INT_		-2147483648
-# define _MAX_INT_		2147483647
-# define M_FAIL 		-1
-# define O_FAIL			-2
-# define A_FAIL			-3
-# define N_FAIL			-4
-# define NODE_PERROR	-5
-# define END_ERROR		-6
-# define START_ERROR	-7
-# define LINK_ERROR		-8
+# define _MIN_INT_			-2147483648
+# define _MAX_INT_			2147483647
+# define LINK_ERROR			0
+# define M_FAIL 			-1
+# define O_FAIL				-2
+# define A_FAIL				-3
+# define NODE_ERROR			-4
+# define NODE_ERROR_NAME	-5
+# define NODE_ERROR_CORD	-6
+# define END_ERROR			-7
+# define START_ERROR		-8
+# define NO_IO				-9
 
 /*
 ** Structures pour construire le graph :
@@ -127,4 +129,6 @@ int			ft_number_arg(char *s);
 int			ft_tablen(char **tab);
 void		ft_free_tab(char **tab);
 
+int			return_error(int err, t_graph *g);
+void		free_graph(t_graph *g);
 #endif
