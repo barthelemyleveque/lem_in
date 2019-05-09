@@ -6,7 +6,7 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:41:28 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/09 14:18:34 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/09 20:20:11 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # define NODE_PERROR	-5
 # define END_ERROR		-6
 # define START_ERROR	-7
+# define LINK_ERROR		-8
+
 /*
 ** Structures pour construire le graph :
 ** t_link = liste des child_nodes d'une salle, et leur flow 
