@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 18:12:01 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/07 15:53:20 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/09 14:48:50 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,44 @@ void	add_to_parent_map(t_node *pos, t_link *link, int *map)
 	map[link->child->hash] = pos->hash;
 }
 
+int		ft_check_flux(t_link *link, t_node *node, int *map, t_graph *graph)
+{
+	t_link	*check;
+	t_link	*opposite;
+	t_link	*prev_link;
+	t_node	*previous;
+
+	check = node->links;
+	if (node == graph->start)
+		return (0);
+	previous = graph->tab[map[node->hash]];
+	while (check->child != previous)
+		check = check->next;
+	opposite = node->links;
+	while (opposite)
+	{
+		if (opposite->flow == -1)
+			break;
+		opposite = opposite->next;
+	}
+	if (check->flow == 0)
+	{
+		if (link->child == opposite->child)
+			return (0);
+		return (1);
+	}
+	else if (check->flow == 1)
+		return (0);
+	return (1);
+}
+
 /*
  ** Ne regarde pas seulement si le lien est visite, mais check si une fourmi
  ** peut prendre le chemin
  */
 
-int		is_visited(t_link *link, int *visited, t_node *node)
+int		is_visited(t_link *link, int *visited, t_node *node, int *map, t_graph
+		*graph)
 {
 	int		i;
 	t_link	*check;
@@ -73,21 +105,11 @@ int		is_visited(t_link *link, int *visited, t_node *node)
 	check = node->links;
 	while (check)
 	{
-		if (check->flow == -1)
-			break;
+		// Si le noeud n'a pas de flow, on s'en branle et on ajoute le child
+		// a la queue
+		if (check->flow == -1 || check->flow == 1)
+			return (ft_check_flux(link, node, map, graph));
 		check = check->next;
-	}
-	if (check)
-	{
-		if (link->child == check->child)
-		{
-			link->child->visited = 1;
-			return (0);
-		}
-		else if (node->visited == 1)
-				return (0);
-		else
-			return (1);
 	}
 	return (0);
 }

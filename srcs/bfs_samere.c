@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/07 16:57:32 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/09 14:49:43 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		update_all(int *map, t_queue *queue, int *v_tab, t_graph
 	tmp_l = queue->node->links;
 	while (tmp_l)
 	{
-		if (!(is_visited(tmp_l, v_tab, queue->node)))
+		if (!(is_visited(tmp_l, v_tab, queue->node, map, graph)))
 		{
 			if (add_to_queue(tmp_l, queue) < 1)
 				return (M_FAIL);

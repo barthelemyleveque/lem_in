@@ -6,7 +6,7 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 11:05:25 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/07 17:03:11 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/09 13:15:16 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ void check_multiple_rooms(t_graph *graph, t_edmond *edmond)
 			while (tab[++j] != -1)
 			{
 				if (path->node->hash == tab[j])
-					ft_printf("Room : %s is multiple\n", path->node->name);
+					ft_printf("Room : %s is multiple in path of %d nodes\n", path->node->name, edmond->nb_chemin);
 			}
 			tab[j] = path->node->hash;
 			path = path->next;
 		}
 	}
-	ft_printf("Check des multiple rooms done\n");
+	ft_printf("Check des multiple rooms done pour %d chemins\n", edmond->nb_chemin);
 }

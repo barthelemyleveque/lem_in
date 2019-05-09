@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 14:49:26 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/01 18:04:27 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/09 14:49:49 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,6 @@ t_edmond	*update_edmond(t_graph *graph, t_edmond *old_eddy, int boucle)
 	}
 	open_paths(graph, tab_paths, boucle);
 	new->tab_paths = tab_paths;
+	//check_multiple_rooms(graph, new);
 	return (new);
 }
