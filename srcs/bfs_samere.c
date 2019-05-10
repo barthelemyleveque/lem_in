@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/10 17:52:07 by anrzepec         ###   ########.fr       */
+/*   Updated: 2019/05/10 18:17:41 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int		update_all(int *map, t_queue *queue, int *v_tab, t_graph
 				return (M_FAIL);
 			add_to_visited(tmp_l, v_tab);
 			map[tmp_l->child->hash] = queue->node->hash;
-			//add_to_parent_map(queue->node, tmp_l, map);
 		}
 		tmp_l = tmp_l->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 14:49:26 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/10 17:43:54 by anrzepec         ###   ########.fr       */
+/*   Updated: 2019/05/10 18:15:35 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ int			update_path(t_link *link, t_path **path, t_node *node)
 	return (1);
 }
 
-int			init_path(t_path *path, t_path *start, t_node *node)
+int			init_path(t_path **path, t_path **start, t_node *node)
 {
-	if (!(path = (t_path*)malloc(sizeof(t_path))))
+	if (!(*path = (t_path*)malloc(sizeof(t_path))))
 		return (M_FAIL);
-	path->node = node;
-	path->next = NULL;
-	start = path;
+	(*path)->node = node;
+	(*path)->next = NULL;
+	*start = *path;
 	return (1);
 }
 
@@ -45,7 +45,7 @@ t_path		*find_new_path(t_graph *graph, int len)
 
 	link = graph->start->links;
 	node = graph->start;
-	if (init_path(path, start, node) < 0)
+	if (init_path(&path, &start, node) < 0)
 		return (NULL);
 	while (node != graph->end)
 	{
@@ -73,8 +73,8 @@ void	open_paths(t_graph *graph, t_path **tab_paths, int boucle)
 	t_link 	*tmp;
 	t_path	*path;
 
-	i = 0;
-	while (i < boucle)
+	i = -1;
+	while (++i < boucle)
 	{
 		path = tab_paths[i];
 		while (path)
@@ -91,7 +91,6 @@ void	open_paths(t_graph *graph, t_path **tab_paths, int boucle)
 			tmp->closed = 0;
 			path = path->next;
 		}
-		i++;
 	}
 }
 
