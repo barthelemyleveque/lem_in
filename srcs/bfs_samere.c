@@ -6,34 +6,11 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/09 14:49:43 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/10 17:52:07 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-/*
-** TO DO : Cleaner le bordel, gestion des free.
-*/
-
-void	print_queue(t_queue *queue)
-{
-	t_queue *tmp;
-	int		i;
-
-	tmp = queue;
-	i = 0;
-	while (tmp)
-	{
-		ft_printf("Queue[%d] = %s\n", i, tmp->node->name);
-		tmp = tmp->next;
-		i++;
-	}
-}
-
-/*
-** Condition d'arret du link child fait bugguer le truc dieu sait pourquoi
-*/ 
 
 int		update_all(int *map, t_queue *queue, int *v_tab, t_graph 
 		*graph)
@@ -48,30 +25,12 @@ int		update_all(int *map, t_queue *queue, int *v_tab, t_graph
 			if (add_to_queue(tmp_l, queue) < 1)
 				return (M_FAIL);
 			add_to_visited(tmp_l, v_tab);
-			add_to_parent_map(queue->node, tmp_l, map);
+			map[tmp_l->child->hash] = queue->node->hash;
+			//add_to_parent_map(queue->node, tmp_l, map);
 		}
 		tmp_l = tmp_l->next;
 	}
 	return (1);
-}
-
-/*
-** On part de notre node start, on update les positions, 
-** 
-*/ 
-
-int		queue_free(t_queue *queue, int **visited)
-{
-	t_queue *tmp;
-
-	while (queue)
-	{
-		tmp = queue;
-		queue = queue->next;
-		free(tmp);
-	}
-	free(*visited);
-	return (M_FAIL);
 }
 
 int		bfs_launcher(t_graph *graph, int *parent_map)
@@ -95,17 +54,12 @@ int		bfs_launcher(t_graph *graph, int *parent_map)
 		tmp = queue;
 		queue = queue->next;
 		free(tmp);
+		tmp = NULL;
 	}
 	i = queue ? 1 : 0;
 	queue_free(queue, &visited);
 	return (i);
 }
-
-/*
-**  Visited_tab : savoir vite si node = visite ou non, et maj rapide
-**	-->Soit on alloue une taille de PRIME pour chercher la valeur directement
-**  -->ou alors de nb_nodes puis parcourir tab[0] = HASH547, tab[1] = HASH1204... 
-*/ 
 
 int		init_bfs(t_graph *graph)
 {
@@ -120,40 +74,17 @@ int		init_bfs(t_graph *graph)
 	iter = 0;
 	while (bfs_launcher(graph, parent_map))
 	{
-		iter++;
-		path = get_path(graph, parent_map);
+		if (!(path = get_path(graph, parent_map)))
+		{
+			free(parent_map);
+			return (M_FAIL);
+		}
 		ek_update_flux(graph, path);
-		edmond = update_edmond(graph, edmond, iter);
+		if (!(edmond = update_edmond(graph, edmond, ++iter)))
+			return (M_FAIL);
 		reinit_tabs(parent_map, PRIME);
 	}
+	free(parent_map);
 	ants_in_my_pants(graph, edmond);
 	return (1);
-}
-
-/*
-** remise a zero des tableaux et des visited
-*/ 
-
-void	reinit_tabs(int *map, int len_map)
-{
-	int		i;
-
-	i = -1;
-	while (++i < len_map)
-		map[i] = -1;
-}
-
-/*
-** Initialisation des structures 
-*/
-
-t_queue		*init_queue(t_graph *g)
-{
-	t_queue	*queue;
-
-	if (!(queue = (t_queue*)malloc(sizeof(t_queue))))
-		return (NULL);
-	queue->node = g->start;
-	queue->next = NULL;
-	return (queue);
 }

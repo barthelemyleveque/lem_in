@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 18:12:01 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/09 14:48:50 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/10 15:48:52 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int		add_to_queue(t_link *link, t_queue *queue)
 	if (!(queue->node))
 	{
 		queue->node = link->child;
-	//	ft_printf("QUEUE | added to queue : %d\n", link->child->hash); 
 		return (1);
 	}
 	if (!(add = (t_queue*)malloc(sizeof(t_queue))))
@@ -43,11 +42,6 @@ int		add_to_queue(t_link *link, t_queue *queue)
 	tmp->next = add;
 	return (1);
 }
-
-/*
- ** map[node][wasintroducedby]
- ** permet de partir du hash de end pour remonter jusqu'a la source ! HEHEH
- */ 
 
 void	add_to_parent_map(t_node *pos, t_link *link, int *map)
 {
@@ -105,8 +99,6 @@ int		is_visited(t_link *link, int *visited, t_node *node, int *map, t_graph
 	check = node->links;
 	while (check)
 	{
-		// Si le noeud n'a pas de flow, on s'en branle et on ajoute le child
-		// a la queue
 		if (check->flow == -1 || check->flow == 1)
 			return (ft_check_flux(link, node, map, graph));
 		check = check->next;

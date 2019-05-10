@@ -6,7 +6,7 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:41:28 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/10 01:18:28 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/10 17:36:19 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct		s_edmond
 	struct s_edmond	*next;
 }					t_edmond;
 
+int			init_graph(t_graph *g);
 int			ft_first_link(t_graph *graph, char **line);
 int			ft_links(t_graph *graph, int fd, char **line);
 int			jenkins_hash(char *name);
@@ -120,6 +121,7 @@ void		check_multiple_rooms(t_graph *graph, t_edmond *edmond);
 void		ants_in_my_pants(t_graph *graph, t_edmond *edmond);
 void		print_tab_paths(t_path **tab_paths, int len, int nb_ants);
 void		ft_push_ants(t_graph *g, t_edmond *res, int ant);
+int			queue_free(t_queue *queue, int **visited);
 
 /*  PARSING TOOLS  */
 int			parse_link(t_graph *g, char **tab);

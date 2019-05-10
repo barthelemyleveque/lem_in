@@ -6,51 +6,56 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 14:49:26 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/09 14:49:49 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/10 17:43:54 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-/*
-** closed permet lors de la recherche des chemins de ne pas passer par les memes
-** liens a chaque fois || fonction degueue a revoir
-*/ 
+int			update_path(t_link *link, t_path **path, t_node *node)
+{
+	t_path	*tmp;
 
-t_path		*find_new_path(t_graph *graph)
+	link->closed = 1;
+	if (!(tmp = (t_path*)malloc(sizeof(t_path))))
+		return (M_FAIL);
+	tmp->node = link->child;
+	node = link->child;
+	tmp->next = NULL;
+	(*path)->next = tmp;
+	return (1);
+}
+
+int			init_path(t_path *path, t_path *start, t_node *node)
+{
+	if (!(path = (t_path*)malloc(sizeof(t_path))))
+		return (M_FAIL);
+	path->node = node;
+	path->next = NULL;
+	start = path;
+	return (1);
+}
+
+t_path		*find_new_path(t_graph *graph, int len)
 {
 	t_node	*node;
 	t_link	*link;
 	t_path	*path;
-	t_path	*tmp;
 	t_path	*start;
-	int		len;
 
 	link = graph->start->links;
 	node = graph->start;
-	if (!(path = (t_path*)malloc(sizeof(t_path))))
+	if (init_path(path, start, node) < 0)
 		return (NULL);
-	path->node = node;
-	path->next = NULL;
-	start = path;
-	len = 0;
 	while (node != graph->end)
 	{
 		if ((link->child == graph->end) || (link->flow == 1 && link->closed == 0))
 		{
 			len++;
-			link->closed = 1;
-			if (!(tmp = (t_path*)malloc(sizeof(t_path))))
+			if (update_path(link, &path, node) < 0)
 				return (NULL);
-			tmp->node = link->child;
-			node = link->child;
-			tmp->next = NULL;
-			path->next = tmp;
 			if (link->child == graph->end)
-			{
-				start->len = len;
-				return (start);
-			}
+				break;
 			path = path->next;
 			link = path->node->links;
 		}
@@ -77,7 +82,6 @@ void	open_paths(t_graph *graph, t_path **tab_paths, int boucle)
 			tmp = path->node->links;
 			if (!(path->next))
 			{
-				//tmp->child->visited = 0;
 				tmp->closed = 0;
 				break ;
 			}
@@ -85,7 +89,6 @@ void	open_paths(t_graph *graph, t_path **tab_paths, int boucle)
 			while (tmp->child != follow)
 				tmp = tmp->next;
 			tmp->closed = 0;
-			//tmp->child->visited = 0;
 			path = path->next;
 		}
 		i++;
@@ -109,14 +112,12 @@ t_edmond	*update_edmond(t_graph *graph, t_edmond *old_eddy, int boucle)
 	i = -1;
 	while (++i < boucle)
 	{
-		path = find_new_path(graph);
+		if (!(path = find_new_path(graph, 0)))
+			return (NULL);
 		path->nb_ants = 0;
-		//ft_printf("\n ------- PATH number %d -------- \n", i);
-		//print_path(path);
 		tab_paths[i] = path;
 	}
 	open_paths(graph, tab_paths, boucle);
 	new->tab_paths = tab_paths;
-	//check_multiple_rooms(graph, new);
 	return (new);
 }

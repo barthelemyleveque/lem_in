@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:01:50 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/10 01:34:25 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/10 15:34:27 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,6 @@ int		get_ants(t_graph *graph, int fd, char **line)
 	ft_strdel(&(*line));
 	*line = NULL;
 	return (1);
-}
-
-int		jenkins_hash(char *name)
-{
-	int				i;
-	unsigned int	hash;
-
-	i = 0;
-	hash = 0;
-	while (name[i] != '\0')
-	{
-		hash += name[i++];
-		hash += hash << 10;
-		hash += hash >> 6;
-	}
-	hash += hash << 3;
-	hash ^= hash >> 11;
-	hash += hash << 15;
-	hash = hash % PRIME;
-	return (hash);
 }
 
 int		ft_fill_node(t_graph *graph, char **tab, t_node *node, int spec)
@@ -119,7 +99,7 @@ int		get_nodes(t_graph *graph, int fd, char **line)
 	return (1);
 }
 
-int		init_graph(char **av, t_graph *graph)
+int		init_graph(t_graph *graph)
 {
 	int		i;
 	int		ret;
@@ -145,39 +125,4 @@ int		init_graph(char **av, t_graph *graph)
 		return (ret);
 	}
 	return (1);
-}
-
-int		valid_graph(t_graph *g)
-{
-	int	*map;
-
-	if (!g->start || !g->end)
-		return (NO_IO);
-	if (!(map = (int*)malloc(sizeof(int) * PRIME)))
-		return (M_FAIL);
-	reinit_tabs(map, PRIME);
-	if (bfs_launcher(g, map) == 1)
-	{
-		ft_putendl("");
-		free(map);
-		return (1);
-	}
-	free(map);
-	return (0);
-}
-
-int		main(int ac, char **av)
-{
-	int			ret;
-	t_graph		graph;
-
-	if ((ret = init_graph(av, &graph)) < 0)
-		return (return_error(ret, &graph));
-	if (!ret)
-		ft_putendl("Stopped processing links after an error, solving lem-in anyway ...");
-	if ((ret = valid_graph(&graph)) < 1)
-		return (return_error(ret, &graph));
-	init_bfs(&graph);
-	free_graph(&graph);
-	return (0);
 }
