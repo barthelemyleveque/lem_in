@@ -6,7 +6,7 @@
 #    By: bleveque <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/11 10:15:06 by bleveque          #+#    #+#              #
-#    Updated: 2019/05/07 16:12:41 by bleveque         ###   ########.fr        #
+#    Updated: 2019/05/10 15:35:38 by anrzepec         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,10 @@ SRCS_PATH = srcs/
 OBJS_PATH = objs/
 LIB_PATH = libft/
 
-SRC_NAME_1 = parse_links.c \
+SRC_NAME_1 = main.c \
+			 jenkins_hash.c \
+			 error_output.c \
+			 parse_links.c \
 			 tab_tools.c \
 			 push_ants.c \
 			 ft_parsing_tools.c \

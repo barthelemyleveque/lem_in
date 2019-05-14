@@ -6,7 +6,7 @@
 /*   By: anrzepec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 13:43:02 by anrzepec          #+#    #+#             */
-/*   Updated: 2019/05/07 15:49:48 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/09 23:27:29 by andrewrze        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int			parse_node(t_graph *g, char **tab, t_node *node, int spec)
 {
 	if (tab[0][0] == 'L')
-		return (NODE_PERROR);
+		return (NODE_ERROR_NAME);
 	if (!ft_number_arg(tab[1]) || !ft_number_arg(tab[2]))
-		return (NODE_PERROR);
+		return (NODE_ERROR_CORD);
 	if (!(node->name = ft_strdup(tab[0])))
 		return (M_FAIL);
 	node->x_coord = ft_atoi(tab[1]);

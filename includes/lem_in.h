@@ -6,7 +6,7 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:41:28 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/09 14:18:34 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/10 17:36:19 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,19 @@
 # define PRIME 9931
 
 /* ERROR RETURNS */
-# define _MIN_INT_		-2147483648
-# define _MAX_INT_		2147483647
-# define M_FAIL 		-1
-# define O_FAIL			-2
-# define A_FAIL			-3
-# define N_FAIL			-4
-# define NODE_PERROR	-5
-# define END_ERROR		-6
-# define START_ERROR	-7
+# define _MIN_INT_			-2147483648
+# define _MAX_INT_			2147483647
+# define LINK_ERROR			0
+# define M_FAIL 			-1
+# define O_FAIL				-2
+# define A_FAIL				-3
+# define NODE_ERROR			-4
+# define NODE_ERROR_NAME	-5
+# define NODE_ERROR_CORD	-6
+# define END_ERROR			-7
+# define START_ERROR		-8
+# define NO_IO				-9
+
 /*
 ** Structures pour construire le graph :
 ** t_link = liste des child_nodes d'une salle, et leur flow 
@@ -96,6 +100,7 @@ typedef struct		s_edmond
 	struct s_edmond	*next;
 }					t_edmond;
 
+int			init_graph(t_graph *g);
 int			ft_first_link(t_graph *graph, char **line);
 int			ft_links(t_graph *graph, int fd, char **line);
 int			jenkins_hash(char *name);
@@ -116,6 +121,7 @@ void		check_multiple_rooms(t_graph *graph, t_edmond *edmond);
 void		ants_in_my_pants(t_graph *graph, t_edmond *edmond);
 void		print_tab_paths(t_path **tab_paths, int len, int nb_ants);
 void		ft_push_ants(t_graph *g, t_edmond *res, int ant);
+int			queue_free(t_queue *queue, int **visited);
 
 /*  PARSING TOOLS  */
 int			parse_link(t_graph *g, char **tab);
@@ -125,4 +131,6 @@ int			ft_number_arg(char *s);
 int			ft_tablen(char **tab);
 void		ft_free_tab(char **tab);
 
+int			return_error(int err, t_graph *g);
+void		free_graph(t_graph *g);
 #endif

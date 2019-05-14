@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 16:08:57 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/03 20:51:51 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/09 17:16:28 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+int					ft_char_count(char *s, char c);
 long long int		ft_atoll(const char *str);
 int					ft_strnum(const char *s);
 int					ft_atoi(const char *str);

@@ -6,49 +6,11 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 12:13:49 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/09 13:15:52 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/10 15:55:37 by anrzepec         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-void	print_path(t_path *path)
-{
-	int 	i;
-
-	i = 0;
-	ft_printf("(Len of this path : %d)\n\n", path->len);
-	while (path)
-	{
-		ft_printf("node num %d : %s\n", i, path->node->name);
-		i++;
-		path = path->next;
-	}
-}
-
-void	print_tab_paths(t_path **tab_paths, int len, int nb_ants)
-{
-	int 	i;
-	int		y;
-	t_path	*path;
-
-	y = -1;
-	while (++y < len)
-	{
-		path = tab_paths[y];
-		i = 0;
-		ft_printf("---- PATH %d of %d -----\n\n", y + 1, len); 
-		ft_printf("(Len of this path : %d)\n", path->len);
-		ft_printf("Ants going through : %d\n", path->nb_ants);
-		while (path)
-		{
-			ft_printf("node num %d : %s\n", i, path->node->name);
-			i++;
-			path = path->next;
-		}
-		ft_printf("\n\n");
-	}
-}
 
 t_path	*get_path(t_graph *graph, int *parent_map)
 {
@@ -75,11 +37,6 @@ t_path	*get_path(t_graph *graph, int *parent_map)
 	return (path);
 }
 
-/*
-** Rajouter flow oppose dans le cas ou 1 | 1 s'annulent 
-** Modifier pour avoir le lien oppose direct la on comprend R
-*/
-
 void	ek_update_flux(t_graph *graph, t_path *path)
 {
 	t_node	*next;
@@ -94,8 +51,6 @@ void	ek_update_flux(t_graph *graph, t_path *path)
 			link_update = link_update->next;
 		link_update->flow += 1;
 		link_update->opposite->flow -= 1;
-		//ft_printf("parent [%s] to child [%s] flow = %d closed : %d\n", path->node->name, link_update->child->name, link_update->flow, link_update->closed);
-		//ft_printf("child [%s] to parent [%s] flow = %d closed : %d\n", link_update->child->name, path->node->name, link_update->opposite->flow, link_update->opposite->closed);
 		tmp = path;
 		path = path->next;
 		free(tmp);
