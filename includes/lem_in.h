@@ -6,7 +6,7 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/26 16:41:28 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/10 17:36:19 by anrzepec         ###   ########.fr       */
+/*   Updated: 2019/05/14 15:06:36 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,4 +133,6 @@ void		ft_free_tab(char **tab);
 
 int			return_error(int err, t_graph *g);
 void		free_graph(t_graph *g);
+void		free_edmond(t_edmond *edmond);
+void		free_paths(t_path **tab, int len);
 #endif

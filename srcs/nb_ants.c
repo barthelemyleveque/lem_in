@@ -6,7 +6,7 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 13:06:21 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/09 14:49:39 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/14 14:58:35 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_edmond		*find_best_path(t_graph *graph, t_edmond *edmond)
 	while (tmp)
 	{
 		steps = number_of_steps(tmp->tab_paths, tmp->nb_chemin, ants);
-		if (steps < tmp_steps) // rajouter condition : pas de chemin a 0 ants
+		if (steps < tmp_steps)
 		{
 			edmond_nb = tmp->nb_chemin;
 			tmp_steps = steps;
@@ -116,9 +116,6 @@ void	ants_in_my_pants(t_graph *graph, t_edmond *edmond)
 
 	best_edmond = find_best_path(graph, edmond);
 	steps = best_edmond->tab_paths[0]->len + best_edmond->tab_paths[0]->nb_ants;
-	/*ft_printf("\n\n>>> %d fourmis parcoureront %d chemins en %d steps <<<\n\n",
-			graph->ants, best_edmond->nb_chemin, steps);*/
-	//print_tab_paths(best_edmond->tab_paths, best_edmond->nb_chemin, graph->ants);
-	//check_multiple_rooms(graph, best_edmond);
-	ft_push_ants(graph, best_edmond, 0);	
+	ft_push_ants(graph, best_edmond, 0);
+	free_edmond(edmond);
 }

@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 12:13:49 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/10 15:55:37 by anrzepec         ###   ########.fr       */
+/*   Updated: 2019/05/14 15:06:39 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,5 @@ void	ek_update_flux(t_graph *graph, t_path *path)
 		path = path->next;
 		free(tmp);
 	}
+	free(path);
 }

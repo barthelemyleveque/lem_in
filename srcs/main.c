@@ -6,11 +6,46 @@
 /*   By: anrzepec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 15:22:33 by anrzepec          #+#    #+#             */
-/*   Updated: 2019/05/10 15:31:22 by anrzepec         ###   ########.fr       */
+/*   Updated: 2019/05/14 15:06:33 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+void	free_paths(t_path **tab, int len)
+{
+	int		i;
+	t_path	*path;
+	t_path	*tmp;
+
+	i = 0;
+	while (i < len)
+	{
+		path = tab[i];
+		while (path)
+		{
+			tmp = path;
+			path = path->next;
+			free(tmp);
+		}
+		i++;
+	}
+	free(tab);
+}
+
+void	free_edmond(t_edmond *edmond)
+{
+	t_edmond	*tmp;
+	t_path		*tmpath;
+
+	while (edmond)
+	{
+		tmp = edmond;
+		free_paths(edmond->tab_paths, edmond->nb_chemin);
+		edmond = edmond->next;
+		free(tmp);
+	}
+}
 
 int		valid_graph(t_graph *g)
 {
