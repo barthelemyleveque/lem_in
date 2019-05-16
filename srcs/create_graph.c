@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:01:50 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/16 19:17:54 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/16 19:27:38 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,10 @@ int		init_graph(t_graph *graph)
 	char	*line;
 
 	line = NULL;
-	if (!(graph->tab = (t_node**)malloc(sizeof(t_node*) * PRIME)))
+	if (!(graph->tab = (t_node**)malloc(sizeof(t_node*) * (PRIME + 1))))
 		return (M_FAIL);
 	i = -1;
-	while (++i < PRIME)
+	while (++i < PRIME + 1)
 		graph->tab[i] = NULL;
 	graph->nb_nodes = 0;
 	graph->start = NULL;

@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/16 18:11:13 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/16 19:32:09 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ int		bfs_launcher(t_graph *graph, int *parent_map)
 	t_queue		*tmp;
 	int			i;
 
-	if (!(visited = (int*)malloc(sizeof(int) * graph->nb_nodes)))
+	if (!(visited = (int*)malloc(sizeof(int) * (graph->nb_nodes + 1))))
 		return (M_FAIL);
 	i = -1;
-	while (++i < graph->nb_nodes)
+	while (++i <= graph->nb_nodes)
 		visited[i] = -1;
 	visited[0] = graph->start->hash;
 	queue = init_queue(graph);

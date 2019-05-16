@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 14:49:26 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/16 18:25:24 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/16 19:41:33 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int			init_path(t_path **path, t_path **start, t_node *node)
 	if (!(*path = (t_path*)malloc(sizeof(t_path))))
 		return (M_FAIL);
 	(*path)->node = node;
+	(*path)->len = 0;
+	(*path)->nb_ants = 0;
 	(*path)->next = NULL;
 	*start = *path;
 	return (1);
