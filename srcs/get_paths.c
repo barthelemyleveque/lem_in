@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/24 12:13:49 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/16 16:29:45 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/16 18:26:12 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ek_update_flux(t_path *path)
 	t_node	*next;
 	t_link	*link_update;
 	t_path	*tmp;
-	
+
 	while (path->next)
 	{
 		link_update = path->node->links;

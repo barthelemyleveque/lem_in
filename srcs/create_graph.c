@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:01:50 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/16 16:28:54 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/16 19:17:54 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ int		ft_fill_node(t_graph *graph, char **tab, t_node *node, int spec)
 	return (1);
 }
 
-// Modifier declaration de *node dans fill_node pour leaks en cas d'erreurs 
-
 int		ft_create_node(t_graph *graph, char *line, int spec)
 {
 	t_node	*node;
@@ -52,18 +50,18 @@ int		ft_create_node(t_graph *graph, char *line, int spec)
 
 	if (ft_char_count(line, ' ') != 2)
 		return (1);
-	if (!(tab = ft_strsplit(line, ' ')) || !(node = malloc(sizeof(t_node))))
+	if (!(node = malloc(sizeof(t_node))))
 		return (M_FAIL);
-	if ((ret = ft_tablen(tab)) == 1 || (ret = ft_tablen(tab)) != 3)
+	if (!(tab = ft_strsplit(line, ' ')))
+		return (free_node(node));
+	if ((ret = ft_tablen(tab)) == 1 || (ret != 3))
 	{
-		free(node);
-		ft_free_tab(tab);
+		free_node_and_tab(tab, node);
 		return (ret == 1 ? 1 : NODE_ERROR);
 	}
 	if ((ret = ft_fill_node(graph, tab, node, spec)) < 1)
 	{
-		ft_free_tab(tab);
-		free(node);
+		free_node_and_tab(tab, node);
 		return (ret);
 	}
 	ft_putendl(line);

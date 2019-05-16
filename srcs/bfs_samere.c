@@ -6,17 +6,16 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/16 16:40:08 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/16 18:11:13 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		update_all(int *map, t_queue *queue, int *v_tab, t_graph 
-		*graph)
+int		update_all(int *map, t_queue *queue, int *v_tab, t_graph *graph)
 {
-	int	i;
-	int ret;
+	int		i;
+	int		ret;
 	t_link	*tmp_l;
 
 	tmp_l = queue->node->links;

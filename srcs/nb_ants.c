@@ -6,18 +6,17 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 13:06:21 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/16 16:36:42 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/16 18:32:56 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-#include <limits.h>
 
-int		ft_max_steps(t_path **tab_paths, int nb_chemins)
+int			ft_max_steps(t_path **tab_paths, int nb_chemins)
 {
 	int	i;
 	int	max_steps;
-	
+
 	i = -1;
 	max_steps = tab_paths[0]->len + tab_paths[0]->nb_ants;
 	while (++i < nb_chemins)
@@ -28,12 +27,12 @@ int		ft_max_steps(t_path **tab_paths, int nb_chemins)
 	return (max_steps);
 }
 
-int		ft_min_steps(t_path **tab_paths, int nb_chemins)
+int			ft_min_steps(t_path **tab_paths, int nb_chemins)
 {
 	int	i;
 	int	path;
 	int	min_steps;
-	
+
 	i = -1;
 	min_steps = tab_paths[0]->len + tab_paths[0]->nb_ants;
 	path = 0;
@@ -48,16 +47,15 @@ int		ft_min_steps(t_path **tab_paths, int nb_chemins)
 	return (path);
 }
 
-
 /*
 ** Le but est d'avoir + ou - le meme nombre de steps par chemin (len du chemin +
 ** nb de fourmis dans ce chemin) dans une strcture a n chemins.
 */
 
-int		number_of_steps(t_path **tab_paths, int nb_chemins, int ants)
+int			number_of_steps(t_path **tab_paths, int nb_chemins, int ants)
 {
 	int		min_steps;
-	
+
 	if (nb_chemins == 1)
 	{
 		tab_paths[0]->nb_ants = ants;
@@ -77,17 +75,17 @@ int		number_of_steps(t_path **tab_paths, int nb_chemins, int ants)
 ** en fonction du nombre de fourmis. Et return la struct Edmond la plus rapide.
 */
 
-t_edmond		*find_best_path(t_graph *graph, t_edmond *edmond)
+t_edmond	*find_best_path(t_graph *graph, t_edmond *edmond)
 {
 	int			steps;
 	int			ants;
-	int 		tmp_steps;
+	int			tmp_steps;
 	int			edmond_nb;
 	t_edmond	*tmp;
 
 	ants = graph->ants;
 	tmp = edmond;
-	tmp_steps = INT_MAX;
+	tmp_steps = _MAX_INT_;
 	while (tmp)
 	{
 		steps = number_of_steps(tmp->tab_paths, tmp->nb_chemin, ants);
@@ -106,9 +104,9 @@ t_edmond		*find_best_path(t_graph *graph, t_edmond *edmond)
 
 /*
 ** Ants in My pants = va lancer toute la machine
-*/ 
+*/
 
-void	ants_in_my_pants(t_graph *graph, t_edmond *edmond)
+void		ants_in_my_pants(t_graph *graph, t_edmond *edmond)
 {
 	t_edmond	*best_edmond;
 	int			steps;

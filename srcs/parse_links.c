@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_links.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrewrzepecki <anrzepec@student.42.f      +#+  +:+       +#+        */
+/*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/03 23:02:55 by andrewrze         #+#    #+#             */
-/*   Updated: 2019/05/09 22:45:03 by andrewrze        ###   ########.fr       */
+/*   Created: 2019/05/16 18:26:36 by bleveque          #+#    #+#             */
+/*   Updated: 2019/05/16 18:26:38 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		parse_link(t_graph *g, char **tab)
 	link = 0;
 	if (ft_tablen(tab) != 2)
 		return (LINK_ERROR);
-	while (i < PRIME)
+	while (i < PRIME + 1)
 	{
 		if (g->tab[i] && !ft_strcmp(g->tab[i]->name, tab[0])
 				&& duplicate_link(g->tab[i], tab[1]))

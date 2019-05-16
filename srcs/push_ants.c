@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_ants.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrewrzepecki <anrzepec@student.42.f      +#+  +:+       +#+        */
+/*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/02 19:41:15 by andrewrze         #+#    #+#             */
-/*   Updated: 2019/05/13 10:26:30 by bleveque         ###   ########.fr       */
+/*   Created: 2019/05/16 18:27:54 by bleveque          #+#    #+#             */
+/*   Updated: 2019/05/16 18:29:54 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int			ft_push_from_start(t_edmond *res, int ant, int ret, int space)
 			res->tab_paths[i]->nb_ants--;
 			if (space)
 				ft_printf(" ");
-			ft_printf("L%d-%s", res->tab_paths[i]->next->node->curr_ant, res->tab_paths[i]->next->node->name);
+			ft_printf("L%d-%s", res->tab_paths[i]->next->node->curr_ant,
+					res->tab_paths[i]->next->node->name);
 			ant++;
 			ret = 1;
 			space = 1;
@@ -55,16 +56,14 @@ int			ft_push_from_start(t_edmond *res, int ant, int ret, int space)
 	return (ant);
 }
 
-void		ft_push_paths(t_path *path, int *ret, int *space)
+void		ft_push_paths(t_path *path, int *ret, int *space, int first)
 {
 	t_path	*tracer;
 	int		tmp;
-	int		first;
 	int		c_tmp;
 
 	tracer = path;
 	tmp = -1;
-	first = 1;
 	while (tracer)
 	{
 		if (tracer->node->curr_ant != -1 || !first)
@@ -96,7 +95,7 @@ void		ft_push_ants(t_graph *g, t_edmond *res, int ant)
 	ret = 0;
 	space = 0;
 	while (++i < res->nb_chemin)
-		ft_push_paths(res->tab_paths[i], &ret, &space);
+		ft_push_paths(res->tab_paths[i], &ret, &space, 1);
 	ant = ft_push_from_start(res, ant, ret, space);
 	if (ft_recuring_probe(res))
 		ft_push_ants(g, res, ant);

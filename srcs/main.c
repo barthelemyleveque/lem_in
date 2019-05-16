@@ -6,7 +6,7 @@
 /*   By: anrzepec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 15:22:33 by anrzepec          #+#    #+#             */
-/*   Updated: 2019/05/16 16:32:57 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/16 19:12:50 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int		valid_graph(t_graph *g)
 	return (0);
 }
 
-int		main()
+int		main(void)
 {
 	int			ret;
 	t_graph		graph;
@@ -73,8 +73,10 @@ int		main()
 	if ((ret = init_graph(&graph)) < 0)
 		return (return_error(ret, &graph));
 	if (!ret)
-		ft_putendl("Stopped processing links after an error, \
-			solving lem-in anyway ...");
+	{
+		ft_putstr_fd("Stopped processing links after an error. ", 2);
+		ft_putendl_fd("Solving lem-in anyway ...", 2);
+	}
 	if ((ret = valid_graph(&graph)) < 1)
 		return (return_error(ret, &graph));
 	init_bfs(&graph);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tab_tools.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: andrewrzepecki <anrzepec@student.42.f      +#+  +:+       +#+        */
+/*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/03 22:01:27 by andrewrze         #+#    #+#             */
-/*   Updated: 2019/05/10 15:41:57 by anrzepec         ###   ########.fr       */
+/*   Created: 2019/05/16 18:33:13 by bleveque          #+#    #+#             */
+/*   Updated: 2019/05/16 18:33:36 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		queue_free(t_queue *queue, int **visited)
+int			queue_free(t_queue *queue, int **visited)
 {
 	t_queue *tmp;
 
@@ -37,7 +37,7 @@ t_queue		*init_queue(t_graph *g)
 	return (queue);
 }
 
-void	reinit_tabs(int *map, int len_map)
+void		reinit_tabs(int *map, int len_map)
 {
 	int		i;
 

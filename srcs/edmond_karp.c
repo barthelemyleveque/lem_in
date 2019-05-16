@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 14:49:26 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/16 16:30:49 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/16 18:25:24 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,41 +36,40 @@ int			init_path(t_path **path, t_path **start, t_node *node)
 	return (1);
 }
 
-t_path		*find_new_path(t_graph *graph, int len)
+t_path		*find_new_path(t_graph *g)
 {
 	t_node	*node;
 	t_link	*link;
 	t_path	*path;
 	t_path	*start;
 
-	link = graph->start->links;
-	node = graph->start;
+	link = g->start->links;
+	node = g->start;
 	if (init_path(&path, &start, node) < 0)
 		return (NULL);
-	while (node != graph->end)
+	while (node != g->end)
 	{
-		if ((link->child == graph->end) || (link->flow == 1 && link->closed == 0))
+		if ((link->child == g->end) || (link->flow == 1 && link->closed == 0))
 		{
-			len++;
+			start->len++;
 			if (update_path(link, &path, node) < 0)
 				return (NULL);
-			if (link->child == graph->end)
-				break;
+			if (link->child == g->end)
+				break ;
 			path = path->next;
 			link = path->node->links;
 		}
 		else
 			link = link->next;
 	}
-	start->len = len;
 	return (start);
 }
 
-void	open_paths(t_path **tab_paths, int boucle)
+void		open_paths(t_path **tab_paths, int boucle)
 {
 	int		i;
 	t_node	*follow;
-	t_link 	*tmp;
+	t_link	*tmp;
 	t_path	*path;
 
 	i = -1;
@@ -110,7 +109,7 @@ t_edmond	*update_edmond(t_graph *graph, t_edmond *old_eddy, int boucle)
 	i = -1;
 	while (++i < boucle)
 	{
-		if (!(path = find_new_path(graph, 0)))
+		if (!(path = find_new_path(graph)))
 			return (NULL);
 		path->nb_ants = 0;
 		tab_paths[i] = path;

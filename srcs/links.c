@@ -6,15 +6,11 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 18:46:51 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/16 17:24:43 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/16 18:27:49 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-/*
- ** flow pour les liens vers start = -2 pour eviter de revenir a la source ?
- */
 
 int		ft_create_link(t_node *parent, t_node *enfant, t_link **opp)
 {
@@ -40,15 +36,10 @@ int		ft_create_link(t_node *parent, t_node *enfant, t_link **opp)
 	return (1);
 }
 
-/*
- ** Verifier qu'on ne tombe pas sur une collision grace a la valeur de hash dans
- ** le noeud (cf : fonction ft_fill_node)
- */ 
-
 int		ft_link_link(char **tab, t_graph *graph)
 {
 	int		hash_0;
-	int 	hash_1;
+	int		hash_1;
 	t_link	*l1;
 	t_link	*l2;
 
@@ -87,10 +78,7 @@ int		ft_first_link(t_graph *graph, char **line)
 	ft_strdel(&(*line));
 	*line = NULL;
 	if (ret < 1)
-	{
-		ft_printf("ERROR: line: %s, ret: %d\n", *line, ret);
 		return (ret);
-	}
 	return (ft_links(graph, 0, line));
 }
 
@@ -116,10 +104,7 @@ int		ft_links(t_graph *graph, int fd, char **line)
 		ft_strdel(&(*line));
 		*line = NULL;
 		if (ret < 1)
-		{
-			ft_printf("ERROR: line: %s, ret: %d\n", *line, ret);
 			return (ret);
-		}
 	}
 	return (1);
 }
