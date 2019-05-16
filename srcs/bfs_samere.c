@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 14:58:43 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/14 15:04:47 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/16 16:40:08 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,19 @@
 int		update_all(int *map, t_queue *queue, int *v_tab, t_graph 
 		*graph)
 {
+	int	i;
+	int ret;
 	t_link	*tmp_l;
 
 	tmp_l = queue->node->links;
 	while (tmp_l)
 	{
-		if (!(is_visited(tmp_l, v_tab, queue->node, map, graph)))
+		i = -1;
+		ret = 0;
+		while (v_tab[++i] != -1)
+			if (v_tab[i] == tmp_l->child->hash)
+				ret = 1;
+		if (!(ret) && !(is_visited(tmp_l, queue->node, map, graph)))
 		{
 			if (add_to_queue(tmp_l, queue) < 1)
 				return (M_FAIL);
@@ -78,7 +85,7 @@ int		init_bfs(t_graph *graph)
 			free(parent_map);
 			return (M_FAIL);
 		}
-		ek_update_flux(graph, path);
+		ek_update_flux(path);
 		if (!(edmond = update_edmond(graph, edmond, ++iter)))
 			return (M_FAIL);
 		reinit_tabs(parent_map, PRIME);

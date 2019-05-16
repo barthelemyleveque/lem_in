@@ -6,7 +6,7 @@
 /*   By: bleveque <bleveque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/30 13:06:21 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/14 14:58:35 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/16 16:36:42 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 int		ft_max_steps(t_path **tab_paths, int nb_chemins)
 {
 	int	i;
-	int	path;
 	int	max_steps;
 	
 	i = -1;

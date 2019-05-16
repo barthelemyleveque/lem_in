@@ -6,7 +6,7 @@
 #    By: bleveque <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/11 10:15:06 by bleveque          #+#    #+#              #
-#    Updated: 2019/05/10 15:35:38 by anrzepec         ###   ########.fr        #
+#    Updated: 2019/05/16 16:24:29 by bleveque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ RED = \x1b[31;5;01m
 GREEN = \x1b[32;01m
 
 CC = gcc
-CFLAGS =
+CFLAGS = -Wall -Wextra -Werror
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c $(INC)
 	@mkdir $(OBJS_PATH) 2> /dev/null || true

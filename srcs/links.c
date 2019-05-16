@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 18:46:51 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/10 01:51:43 by andrewrze        ###   ########.fr       */
+/*   Updated: 2019/05/16 17:24:43 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  ** flow pour les liens vers start = -2 pour eviter de revenir a la source ?
  */
 
-int		ft_create_link(t_graph *graph, t_node *parent, t_node *enfant, t_link **opp)
+int		ft_create_link(t_node *parent, t_node *enfant, t_link **opp)
 {
 	t_link	*link;
 	t_link	*tmp;
@@ -60,9 +60,9 @@ int		ft_link_link(char **tab, t_graph *graph)
 		hash_0 = hash_0 < PRIME ? hash_0 + 1 : 0;
 	while (ft_strcmp(tab[1], graph->tab[hash_1]->name))
 		hash_1 = hash_1 < PRIME ? hash_1 + 1 : 0;
-	if (ft_create_link(graph, graph->tab[hash_0], graph->tab[hash_1], &l1) < 1)
+	if (ft_create_link(graph->tab[hash_0], graph->tab[hash_1], &l1) < 1)
 		return (M_FAIL);
-	if (ft_create_link(graph, graph->tab[hash_1], graph->tab[hash_0], &l2) < 1)
+	if (ft_create_link(graph->tab[hash_1], graph->tab[hash_0], &l2) < 1)
 		return (M_FAIL);
 	l1->opposite = l2;
 	l2->opposite = l1;
@@ -87,7 +87,10 @@ int		ft_first_link(t_graph *graph, char **line)
 	ft_strdel(&(*line));
 	*line = NULL;
 	if (ret < 1)
+	{
+		ft_printf("ERROR: line: %s, ret: %d\n", *line, ret);
 		return (ret);
+	}
 	return (ft_links(graph, 0, line));
 }
 
@@ -113,28 +116,10 @@ int		ft_links(t_graph *graph, int fd, char **line)
 		ft_strdel(&(*line));
 		*line = NULL;
 		if (ret < 1)
+		{
+			ft_printf("ERROR: line: %s, ret: %d\n", *line, ret);
 			return (ret);
+		}
 	}
-	//ft_print_links(graph, graph->start);
 	return (1);
-}
-
-void	ft_print_links(t_graph *graph, t_node *room)
-{
-	t_link	*link;
-	int		i;
-
-	link = room->links;
-	i = 0;
-	ft_printf("%d ants will start from : '%s' [H:%d] | Dest : '%s' [H:%d] \n\n", 
-			graph->ants, graph->start->name, graph->start->hash, graph->end->name, graph->end->hash);
-	ft_printf("check hash : %d\n", jenkins_hash(room->name));
-	ft_printf("--- '%s' [H:%d] LINKS --- \n\n", room->name, room->hash);
-	while (link)
-	{
-		ft_printf("Salle connectee n°%d : %s [H:%d]\n", i, link->child->name, link->child->hash);
-		link = link->next;
-		i++;
-	}
-	ft_printf("\nThere is %d nodes in the map\n\n", graph->nb_nodes);
 }

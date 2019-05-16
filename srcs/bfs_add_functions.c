@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/23 18:12:01 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/10 15:48:52 by anrzepec         ###   ########.fr       */
+/*   Updated: 2019/05/16 16:40:05 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int		ft_check_flux(t_link *link, t_node *node, int *map, t_graph *graph)
 {
 	t_link	*check;
 	t_link	*opposite;
-	t_link	*prev_link;
 	t_node	*previous;
 
 	check = node->links;
@@ -65,14 +64,13 @@ int		ft_check_flux(t_link *link, t_node *node, int *map, t_graph *graph)
 	while (opposite)
 	{
 		if (opposite->flow == -1)
-			break;
+			break ;
 		opposite = opposite->next;
 	}
 	if (check->flow == 0)
 	{
 		if (link->child == opposite->child)
 			return (0);
-		return (1);
 	}
 	else if (check->flow == 1)
 		return (0);
@@ -80,22 +78,16 @@ int		ft_check_flux(t_link *link, t_node *node, int *map, t_graph *graph)
 }
 
 /*
- ** Ne regarde pas seulement si le lien est visite, mais check si une fourmi
- ** peut prendre le chemin
- */
+** Ne regarde pas seulement si le lien est visite, mais check si une fourmi
+** peut prendre le chemin
+*/
 
-int		is_visited(t_link *link, int *visited, t_node *node, int *map, t_graph
-		*graph)
+int		is_visited(t_link *link, t_node *node, int *map, t_graph *graph)
 {
-	int		i;
 	t_link	*check;
 
 	if (link->flow >= 1)
 		return (1);
-	i = -1;
-	while (visited[++i] != -1)
-		if (visited[i] == link->child->hash)
-			return (1);
 	check = node->links;
 	while (check)
 	{

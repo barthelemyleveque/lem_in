@@ -6,7 +6,7 @@
 /*   By: anrzepec <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/10 15:22:33 by anrzepec          #+#    #+#             */
-/*   Updated: 2019/05/14 15:06:33 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/16 16:32:57 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	free_paths(t_path **tab, int len)
 void	free_edmond(t_edmond *edmond)
 {
 	t_edmond	*tmp;
-	t_path		*tmpath;
 
 	while (edmond)
 	{
@@ -66,7 +65,7 @@ int		valid_graph(t_graph *g)
 	return (0);
 }
 
-int		main(int ac, char **av)
+int		main()
 {
 	int			ret;
 	t_graph		graph;

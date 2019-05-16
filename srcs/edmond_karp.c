@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/25 14:49:26 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/14 15:04:40 by bleveque         ###   ########.fr       */
+/*   Updated: 2019/05/16 16:30:49 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_path		*find_new_path(t_graph *graph, int len)
 	return (start);
 }
 
-void	open_paths(t_graph *graph, t_path **tab_paths, int boucle)
+void	open_paths(t_path **tab_paths, int boucle)
 {
 	int		i;
 	t_node	*follow;
@@ -99,7 +99,6 @@ t_edmond	*update_edmond(t_graph *graph, t_edmond *old_eddy, int boucle)
 	t_edmond	*new;
 	t_path		**tab_paths;
 	t_path		*path;
-	t_path		*logic_path;
 	int			i;
 
 	if (!(new = (t_edmond*)malloc(sizeof(t_edmond))))
@@ -116,7 +115,7 @@ t_edmond	*update_edmond(t_graph *graph, t_edmond *old_eddy, int boucle)
 		path->nb_ants = 0;
 		tab_paths[i] = path;
 	}
-	open_paths(graph, tab_paths, boucle);
+	open_paths(tab_paths, boucle);
 	new->tab_paths = tab_paths;
 	return (new);
 }

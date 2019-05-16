@@ -6,7 +6,7 @@
 /*   By: bleveque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/22 11:01:50 by bleveque          #+#    #+#             */
-/*   Updated: 2019/05/10 15:34:27 by anrzepec         ###   ########.fr       */
+/*   Updated: 2019/05/16 16:28:54 by bleveque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		ft_fill_node(t_graph *graph, char **tab, t_node *node, int spec)
 
 // Modifier declaration de *node dans fill_node pour leaks en cas d'erreurs 
 
-int		ft_create_node(t_graph *graph, char *line, int spec, int fd)
+int		ft_create_node(t_graph *graph, char *line, int spec)
 {
 	t_node	*node;
 	char	**tab;
@@ -84,7 +84,7 @@ int		get_nodes(t_graph *graph, int fd, char **line)
 			spec = ft_parse_comment(*line);
 		else if (*line)
 		{
-			if ((ret = ft_create_node(graph, *line, spec, fd)) == 1)
+			if ((ret = ft_create_node(graph, *line, spec)) == 1)
 				return (ft_first_link(graph, line));
 			else if (ret < 2)
 			{
