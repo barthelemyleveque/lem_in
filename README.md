@@ -26,4 +26,4 @@ L0 <=> first ant ; L1 <=> second ant ; up to L99 <=> hundredth ant
 
 In the first line you have L0-99 which means the first ant goes to room "99", then L1-806 which means the second ant goes to room "806" etc. 
 
-
+The rules of lem-in state that there can be only one ant in a room at a time. Which cause superposition problems that were fixed using a custon Edmond-Karps algorithm and graph theory.
