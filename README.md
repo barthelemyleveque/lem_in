@@ -13,3 +13,17 @@ At the beginning from standart output the program recieves information about num
 Comments "##start" and "##end" are provided to show the start and end room information. We don't care about any other comments.
 
 ## Installation and usage
+
+```
+git clone https://github.com/barthelemyleveque/lem_in && cd lem_in && make
+./lem-in < maps/[ONE_OF_THE_MAPS]
+```
+
+For example, if you execute maps/big, the program output will be :
+![lem-in](https://i.ibb.co/7pSmxPM/Screen-Shot-2019-10-28-at-1-20-03-PM.png)
+
+L0 <=> first ant ; L1 <=> second ant ; up to L99 <=> hundredth ant
+
+In the first line you have L0-99 which means the first ant goes to room "99", then L1-806 which means the second ant goes to room "806" etc. 
+
+
